@@ -1,0 +1,30 @@
+{
+  "name": "testtask_googleformclone",
+  "version": "1.0.0",
+  "description": "Create a simplified clone of Google Forms with core functionality for form creation, viewing, and submission. The project must be structured as a monorepo, utilizing TypeScript, React, and Redux on the front-end, and a simple GraphQL server on the back-end for data storage.",
+  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npm run dev -w server\" \"npm run dev -w client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BohdanSV-main/testTask_GoogleFormClone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/BohdanSV-main/testTask_GoogleFormClone/issues"
+  },
+  "homepage": "https://github.com/BohdanSV-main/testTask_GoogleFormClone#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
