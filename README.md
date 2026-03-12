@@ -36,7 +36,7 @@ google-forms-lite/
 ### 1. Clone the repository
 
 ```bash
-git clone <https://github.com/BohdanSV-main/testTask_GoogleFormClone>
+git clone -b dev <https://github.com/BohdanSV-main/testTask_GoogleFormClone>
 cd google-forms-lite
 ```
 
