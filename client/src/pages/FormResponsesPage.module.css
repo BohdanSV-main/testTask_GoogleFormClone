@@ -1,0 +1,38 @@
+.page {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.header {
+  background: #16213e;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  border-top: 8px solid #bb86fc;
+}
+
+.header h1 {
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 4px;
+  color: #e0e0e0;
+}
+
+.header p {
+  color: #888;
+  font-size: 14px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty {
+  text-align: center;
+  color: #888;
+  margin-top: 48px;
+}

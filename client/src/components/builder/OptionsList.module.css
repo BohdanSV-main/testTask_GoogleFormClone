@@ -1,0 +1,42 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.item input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.item button {
+  background: transparent;
+  color: #888;
+  padding: 6px 10px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.item button:hover {
+  background-color: rgba(207,102,121,0.1);
+  color: #cf6679;
+}
+
+.addBtn {
+  align-self: flex-start;
+  background: transparent !important;
+  color: #bb86fc !important;
+  border: 1px dashed #bb86fc !important;
+  font-size: 13px;
+  padding: 6px 12px;
+}
+
+.addBtn:hover {
+  background-color: rgba(187,134,252,0.1) !important;
+}

@@ -1,0 +1,23 @@
+.selector {
+  width: auto;
+  min-width: 160px;
+  padding: 10px 12px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  background: #16213e;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.selector:focus {
+  border-color: #bb86fc;
+  border-width: 2px;
+}
+
+.selector option {
+  background: #16213e;
+  color: #e0e0e0;
+}

@@ -1,0 +1,56 @@
+.page {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.header {
+  background: #16213e;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  border-top: 8px solid #bb86fc;
+}
+
+.header h1 {
+  font-size: 32px;
+  font-weight: 400;
+  margin-bottom: 16px;
+  color: #e0e0e0;
+}
+
+.header input,
+.header textarea {
+  margin-bottom: 12px;
+  display: block;
+  font-size: 16px;
+}
+
+.header textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+.questions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.actions button:first-child {
+  background-color: transparent;
+  color: #bb86fc;
+  border: 1px solid #bb86fc;
+}
+
+.actions button:first-child:hover {
+  background-color: rgba(187,134,252,0.1);
+}

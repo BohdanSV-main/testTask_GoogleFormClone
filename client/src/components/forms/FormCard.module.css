@@ -1,0 +1,48 @@
+.card {
+  background: #16213e;
+  border-radius: 8px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: box-shadow 0.2s, transform 0.2s;
+  border-left: 6px solid #bb86fc;
+}
+
+.card:hover {
+  box-shadow: 0 4px 16px rgba(187,134,252,0.2);
+  transform: translateY(-1px);
+}
+
+.info h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #e0e0e0;
+}
+
+.info p {
+  color: #888;
+  font-size: 13px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actions a {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid #bb86fc;
+  color: #bb86fc;
+  transition: background-color 0.2s;
+}
+
+.actions a:hover {
+  background-color: rgba(187,134,252,0.1);
+  text-decoration: none;
+}

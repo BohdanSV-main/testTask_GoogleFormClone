@@ -1,0 +1,66 @@
+.editor {
+  background: #16213e;
+  border-radius: 8px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-left: 4px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.editor:focus-within {
+  border-left-color: #bb86fc;
+}
+
+.top {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.top input {
+  flex: 1;
+  font-size: 15px;
+}
+
+.top select {
+  width: auto;
+  min-width: 160px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #2a2a4a;
+  padding-top: 12px;
+}
+
+.footer label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #888;
+  cursor: pointer;
+}
+
+.footer label input[type="checkbox"] {
+  width: auto;
+  accent-color: #bb86fc;
+}
+
+.deleteBtn {
+  background: transparent;
+  color: #cf6679;
+  border: none;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.deleteBtn:hover {
+  background-color: rgba(207,102,121,0.1);
+  color: #ff8a9a;
+}
