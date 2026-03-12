@@ -1,16 +1,7 @@
 import { responses, forms } from "../store/inMemoryStore.js";
 import type { Response, Answer } from "../types/index.js";
+import type { SubmitResponseArgs } from "../types/index.js";
 import { v4 as uuidv4 } from "uuid";
-
-interface AnswerInput {
-    questionId: string;
-    value: string[];
-}
-
-interface SubmitResponseArgs {
-    formId: string;
-    answers: AnswerInput[];
-}
 
 export const responseResolvers = {
     Query: {

@@ -1,19 +1,12 @@
 import { forms } from "../store/inMemoryStore.js";
-import type { Form, Question, Option, QuestionType } from "../types/index.js";
+import type {
+    Form,
+    Question,
+    Option,
+    QuestionType,
+    CreateFormArgs,
+} from "../types/index.js";
 import { v4 as uuidv4 } from "uuid";
-
-interface QuestionInput {
-    title: string;
-    type: string;
-    options?: { value: string }[];
-    required: boolean;
-}
-
-interface CreateFormArgs {
-    title: string;
-    description?: string;
-    questions?: QuestionInput[];
-}
 
 export const formResolvers = {
     Query: {

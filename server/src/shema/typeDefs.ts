@@ -52,11 +52,10 @@ export const typeDefs = `#graphql
   type Query {
     forms: [Form!]!
     form(id: ID!): Form
-    responses:(formId: ID!): [Response!]!
+    responses(formId: ID!): [Response!]!
   }
-
   type Mutation {
-    createForm(title: String!, description: String!, questions: [QuestionInput!]): Form!
+    createForm(title: String!, description: String, questions: [QuestionInput!]): Form!
     submitResponse(formId: ID!, answers: [AnswerInput!]!): Response!
   }
 `;
