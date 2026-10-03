@@ -1,108 +1,96 @@
-# Google Forms Lite Clone
+﻿# форма. — Forms Lite
 
-A simplified clone of Google Forms built as a monorepo with React + TypeScript on the frontend and GraphQL on the backend.
+Навчальний застосунок для створення анкет, заповнення та перегляду відповідей. Інтерфейс українською, у стилі паперових анкет і ретро-мінімалізму.
 
----
+## Запуск
 
-## Tech Stack
+Потрібні Node.js 22.12+ або 24 та npm з підтримкою workspaces.
 
-**Frontend:** React, TypeScript, Redux Toolkit, RTK Query, React Router, Vite
+У корені репозиторію:
 
-**Backend:** Node.js, Apollo Server, GraphQL, Express
-
----
-
-## Project Structure
-
-```
-google-forms-lite/
-├── client/          # React frontend
-├── server/          # GraphQL backend
-├── package.json     # Root monorepo config
-└── README.md
-```
-
----
-
-## Prerequisites
-
-- Node.js v18+
-- npm v9+
-
----
-
-## Setup & Installation
-
-### 1. Clone the repository
-
-```bash
-git clone -b dev <https://github.com/BohdanSV-main/testTask_GoogleFormClone>
-cd google-forms-lite
-```
-
-### 2. Install dependencies
-
-Install all dependencies for both client and server:
-
-```bash
-# Install root dependencies
+```sh
 npm install
-
-# Install client dependencies
-cd client && npm install
-
-# Install server dependencies
-cd ../server && npm install
-```
-
----
-
-## Running the Project
-
-**Server** (runs on http://localhost:4000/graphql):
-
-```bash
-cd server
 npm run dev
 ```
 
-**Client** (runs on http://localhost:5173):
+- Інтерфейс: http://localhost:5173
+- GraphQL API: http://localhost:4000/graphql
 
-```bash
-cd client
-npm run dev
+Залежності встановлюються один раз із кореня монорепозиторію. Окреме встановлення всередині client і server не потрібне.
+
+За потреби скопіюйте `client/.env.example` у `client/.env` і задайте `VITE_GRAPHQL_URL`. Без налаштування клієнт використовує `http://localhost:4000/graphql`. Після зміни env перезапустіть Vite.
+
+## Можливості
+
+- Створення форми з назвою, описом і довільною кількістю питань.
+- Чотири типи питань: текст, один варіант, кілька варіантів, дата.
+- Обов’язкові питання, перевірка порожніх значень, варіантів і дат.
+- Пошук серед створених форм.
+- Заповнення з індикатором прогресу та помилками біля полів.
+- Збереження введених даних при невдалому запиті та повторна спроба.
+- Перегляд кожної відповіді з датою, назвами питань і вибраними варіантами.
+- Адаптивні екрани, клавіатурна навігація, видимий фокус і reduced motion.
+
+## Архітектура
+
+Frontend: React 19, TypeScript, React Router, Redux Toolkit / RTK Query, Vite, CSS Modules, GraphQL Code Generator.
+
+Backend: Express, Apollo Server, GraphQL, TypeScript.
+
+```text
+client/src/
+  app/       — провайдери, маршрути, store, оболонка
+  pages/     — композиція екранів; без бізнес-логіки
+  widgets/   — каталог, перегляд відповідей, header/footer
+  features/  — створення та заповнення форм
+  entities/  — моделі форми/відповіді, запити читання, представлення
+  shared/    — UI-компоненти, транспорт, токени, допоміжні бібліотеки
+server/src/  — GraphQL schema/resolvers, сховище в пам’яті
 ```
 
----
+Імпорти спрямовані до нижчих шарів. Slices відкривають явний public API через `index.ts`. Бізнес-правила й локальний стан знаходяться в `model` відповідної feature; серверні дані зберігаються в кеші RTK Query. Steiger перевіряє межі FSD, ESLint додатково обмежує логіку в pages.
 
-## GraphQL API
+Подробиці: [архітектура frontend](client/README.md), [план реалізації](docs/frontend-implementation-plan.md), [аналіз попереднього UI](docs/frontend-redesign-review.md).
 
-Once the server is running, open **http://localhost:4000/graphql** to access Apollo Sandbox where you can explore and test all queries and mutations.
+## Команди
 
----
+| Команда з кореня                     | Призначення                                            |
+| ------------------------------------ | ------------------------------------------------------ |
+| `npm run dev`                        | Одночасно запускає клієнт і сервер                     |
+| `npm run build`                      | Збирає клієнт і сервер                                 |
+| `npm test`                           | Запускає frontend і backend тести без watch            |
+| `npm run check`                      | ESLint, FSD, форматування, тести, збірка               |
+| `npm run codegen`                    | Генерує типи й документи GraphQL із локальної схеми    |
+| `npm run format`                     | Форматує код, конфігурації та документацію репозиторію |
+| `npm run format:check`               | Перевіряє форматування без зміни файлів                |
+| `npm run format --workspace client`  | Форматує лише frontend                                 |
+| `npm run test --workspace client`    | Frontend тести у watch-режимі                          |
+| `npm run preview --workspace client` | Перегляд зібраного клієнта; API запускається окремо    |
 
-## Available Scripts
+## Форматування коду
 
-### Client
+Єдина конфігурація Prettier — `.prettierrc.json` у корені. Використовуємо відступ у два пробіли, одинарні лапки в JavaScript/TypeScript, крапки з комою, trailing commas та ширину рядка 100 символів. Файли зберігаються в UTF-8 з LF; налаштування редакторів узгоджені через `.editorconfig`, а `.gitattributes` зберігає LF при checkout у Windows.
 
-| Script            | Description                                       |
-| ----------------- | ------------------------------------------------- |
-| `npm run dev`     | Start development server                          |
-| `npm run build`   | Build for production                              |
-| `npm run codegen` | Regenerate GraphQL types (server must be running) |
+Версія Prettier зафіксована точно в кореневому `package.json`. Команди npm та розширення VS Code використовують локальну версію. Встановіть рекомендоване розширення Prettier: workspace-налаштування в `.vscode/settings.json` вмикають форматування підтримуваних файлів при збереженні.
 
-### Server
+Prettier відповідає за формат, ESLint — за правила коду. `eslint-config-prettier` вимикає конфліктні правила; форматування перевіряється окремою командою в `npm run check`. `.prettierignore` виключає залежності, збірки, coverage, lock-файли, згенеровані GraphQL-типи та початковий HTML-референс.
 
-| Script          | Description                  |
-| --------------- | ---------------------------- |
-| `npm run dev`   | Start server with hot reload |
-| `npm run build` | Compile TypeScript           |
-| `npm run start` | Run compiled server          |
+Збірка сервера записує результат у `server/dist`, не в `server/src`.
 
----
+## GraphQL і codegen
 
-## Notes
+Джерело схеми — `server/src/shema/typeDefs.ts`. Операції лежать поряд зі своїми модулями в `client/src/entities/**/api/*.graphql` та `client/src/features/**/api/*.graphql`. Codegen створює `client/src/shared/api/generated/graphql.ts`.
 
-- Data is stored **in-memory** on the server — all data is lost on server restart
-- No authentication is required
-- Codegen requires the server to be running: `npm run codegen` inside `client/`
+Після зміни схеми або операції виконайте `npm run codegen`. Запущений сервер для генерації не потрібен. Генерований файл не редагується вручну.
+
+Transport обробляє як HTTP/мережеві помилки, так і GraphQL `errors` при HTTP 200. Повідомлення про успіх з’являється лише після підтвердженої мутації.
+
+## Дизайн
+
+`forms-redesign-preview.html` — автономний погоджений макет із демонстраційними даними. Він зберігається як еталон і не підключається до застосунку. `cookers-old-express-design.html` — вихідний візуальний орієнтир.
+
+Скриншоти макета: `docs/design-previews/`. Скриншоти реалізованих екранів: `docs/implementation-previews/`.
+
+## Межі навчального застосунку
+
+Дані зберігаються в пам’яті backend і зникають після його перезапуску. Авторизація, редагування вже створених форм і постійна база даних не реалізовані. Frontend-валідація покращує взаємодію, але не замінює серверну перевірку даних.

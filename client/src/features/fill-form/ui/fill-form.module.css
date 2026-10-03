@@ -1,0 +1,178 @@
+.heading {
+  padding: 30px 33px 26px;
+}
+
+.heading h1 {
+  font-size: 36px;
+  margin: 15px 0;
+}
+
+.eyebrow {
+  font: 11px var(--font-mono);
+  letter-spacing: 1px;
+}
+
+.description {
+  color: var(--color-muted);
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 17px;
+  border-top: 1px dashed var(--color-line);
+  padding-top: 17px;
+  margin-top: 22px;
+  font: 11px var(--font-mono);
+  color: var(--color-muted);
+}
+
+.required {
+  color: var(--color-primary);
+}
+
+.question {
+  min-width: 0;
+  margin: 19px 0 0;
+  border: 1.5px solid var(--color-ink);
+  background: var(--color-surface);
+  padding: 25px 32px;
+}
+
+.question legend {
+  float: left;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 17px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.content {
+  clear: both;
+}
+
+.questionIndex {
+  font: 12px var(--font-mono);
+  color: var(--color-muted);
+  margin-right: 13px;
+}
+
+.hint {
+  color: var(--color-muted);
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.choices {
+  display: grid;
+  gap: 8px;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.progressLabel {
+  font: 11px var(--font-mono);
+  color: var(--color-muted);
+}
+
+.progress {
+  appearance: none;
+  display: block;
+  height: 5px;
+  width: 155px;
+  margin-top: 9px;
+  border: 0;
+  background: var(--color-line);
+  color: var(--color-teal);
+}
+
+.progress::-webkit-progress-bar {
+  background: var(--color-line);
+}
+
+.progress::-webkit-progress-value {
+  background: var(--color-teal);
+}
+
+.progress::-moz-progress-bar {
+  background: var(--color-teal);
+}
+
+.submitError {
+  margin-top: 20px;
+}
+
+.success {
+  text-align: center;
+  padding: 60px 30px;
+  margin: 35px 0;
+}
+
+.stamp {
+  display: inline-block;
+  padding: 9px 17px;
+  border: 3px double var(--color-teal);
+  color: var(--color-teal);
+  font: 700 19px var(--font-mono);
+  transform: rotate(-7deg);
+  margin: 10px 0 30px;
+}
+
+.success h1 {
+  font-size: 37px;
+  margin-bottom: 17px;
+}
+
+.success p {
+  color: var(--color-muted);
+  max-width: 390px;
+  margin: 0 auto 24px;
+  font-size: 14px;
+}
+
+.successActions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 680px) {
+  .heading {
+    padding: 24px;
+  }
+
+  .heading h1 {
+    font-size: 31px;
+  }
+
+  .question {
+    padding: 20px;
+  }
+
+  .question legend {
+    font-size: 15px;
+  }
+
+  .bottom {
+    flex-wrap: wrap;
+  }
+
+  .success {
+    padding: 40px 20px;
+  }
+
+  .success h1 {
+    font-size: 31px;
+  }
+}

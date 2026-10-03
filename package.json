@@ -9,7 +9,13 @@
     "server"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently -k -n api,web \"npm run dev --workspace server\" \"npm run dev --workspace client\"",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test:run --workspace client && npm run test --workspace server -- --run",
+    "check": "npm run lint --workspace client && npm run lint:fsd --workspace client && npm run format:check && npm test && npm run build",
+    "codegen": "npm run codegen --workspace client",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -24,6 +30,7 @@
   },
   "homepage": "https://github.com/BohdanSV-main/testTask_GoogleFormClone#readme",
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "prettier": "3.9.9"
   }
 }

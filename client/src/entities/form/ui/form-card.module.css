@@ -1,0 +1,72 @@
+.card {
+  border: var(--border-strong);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-paper);
+  display: flex;
+  flex-direction: column;
+  min-height: 286px;
+  min-width: 0;
+}
+
+.band {
+  height: 42px;
+  background: var(--color-yellow);
+  border-bottom: var(--border-strong);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 18px;
+  font: 11px var(--font-mono);
+  letter-spacing: 1px;
+}
+
+.card:nth-child(3n + 2) .band {
+  background: #bcd5c8;
+}
+
+.card:nth-child(3n + 3) .band {
+  background: var(--color-rose-soft);
+}
+
+.body {
+  padding: 23px 21px 18px;
+  flex: 1;
+}
+
+.body h3 {
+  font-size: 23px;
+  margin-bottom: 12px;
+}
+
+.body p {
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.meta {
+  margin-top: 19px;
+  font: 11px var(--font-mono);
+  color: var(--color-muted);
+}
+
+.actions {
+  padding: 15px 20px;
+  border-top: 1px dashed var(--color-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.actions > a:last-child {
+  font-size: 12px;
+}
+
+@media (max-width: 680px) {
+  .card {
+    min-height: 0;
+  }
+}

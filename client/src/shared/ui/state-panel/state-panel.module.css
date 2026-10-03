@@ -1,0 +1,48 @@
+.panel,
+.loading {
+  text-align: center;
+  padding: 45px 25px;
+  border: 1.5px dashed var(--color-ink);
+  background: var(--color-surface);
+}
+
+.panel h2 {
+  font-size: 24px;
+  margin: 15px 0 12px;
+}
+
+.panel p {
+  font-size: 14px;
+  color: var(--color-muted);
+  max-width: 400px;
+  margin: 0 auto 23px;
+}
+
+.icon {
+  display: inline-grid;
+  place-items: center;
+  width: 55px;
+  height: 55px;
+  font: 29px var(--font-editorial);
+  background: var(--color-yellow);
+  border: 1.5px solid var(--color-ink);
+  box-shadow: 3px 3px 0 var(--color-ink);
+}
+
+.loading p {
+  font: 12px var(--font-mono);
+  letter-spacing: 1px;
+  margin-bottom: 28px;
+}
+
+.skeleton,
+.shortSkeleton {
+  height: 12px;
+  background: #e6ddc9;
+  margin: 14px auto;
+  width: 75%;
+}
+
+.shortSkeleton {
+  width: 45%;
+}

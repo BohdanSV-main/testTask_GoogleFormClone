@@ -1,0 +1,2002 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>форма. — макет редизайну Forms Lite</title>
+    <style>
+      :root {
+        --paper: #f8f0db;
+        --sheet: #fffcf3;
+        --ink: #29251f;
+        --muted: #696257;
+        --red: #bb382c;
+        --yellow: #edc655;
+        --teal: #216b60;
+        --line: #d8ceba;
+        --shadow: 4px 4px 0 var(--ink);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font:
+          15px/1.6 Arial,
+          Helvetica,
+          sans-serif;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+        color: inherit;
+      }
+      button,
+      a,
+      input,
+      select,
+      textarea {
+        -webkit-tap-highlight-color: transparent;
+      }
+      button,
+      a {
+        touch-action: manipulation;
+      }
+      button {
+        cursor: pointer;
+      }
+      a {
+        color: inherit;
+        text-underline-offset: 4px;
+      }
+      button:disabled {
+        cursor: default;
+        opacity: 0.5;
+      }
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible,
+      select:focus-visible,
+      summary:focus-visible {
+        outline: 3px solid var(--teal);
+        outline-offset: 4px;
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+      h1,
+      h2,
+      h3 {
+        line-height: 1.12;
+      }
+      h1 {
+        font-size: clamp(32px, 4.3vw, 57px);
+        letter-spacing: -2.5px;
+      }
+      h2 {
+        font-size: 30px;
+        letter-spacing: -1px;
+      }
+      h3 {
+        font-size: 22px;
+        letter-spacing: -0.5px;
+      }
+      svg {
+        display: block;
+      }
+      button svg,
+      a svg {
+        width: 19px;
+        height: 19px;
+        flex-shrink: 0;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      .mono {
+        font:
+          12px/1.6 'Courier New',
+          monospace;
+        letter-spacing: 1px;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .red {
+        color: var(--red);
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+      .wrap {
+        max-width: 1160px;
+        margin: 0 auto;
+        padding: 0 32px;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .between {
+        justify-content: space-between;
+      }
+      .stack {
+        display: grid;
+        gap: 18px;
+      }
+      .skip {
+        position: fixed;
+        top: -80px;
+        left: 16px;
+        z-index: 100;
+        background: var(--yellow);
+        padding: 12px;
+      }
+      .skip:focus {
+        top: 12px;
+      }
+      .review-bar {
+        background: var(--ink);
+        color: var(--sheet);
+        font-size: 12px;
+      }
+      .review-inner {
+        max-width: 1440px;
+        margin: auto;
+        padding: 9px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+      .review-label {
+        white-space: nowrap;
+      }
+      .review-label b {
+        color: var(--yellow);
+        margin-right: 10px;
+      }
+      .review-nav {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+      }
+      .review-nav a {
+        padding: 4px 10px;
+        color: #e2d9c7;
+        text-decoration: none;
+        border: 1px solid transparent;
+      }
+      .review-nav a[aria-current='page'] {
+        border-color: var(--yellow);
+        color: var(--yellow);
+      }
+      .review-note {
+        font-size: 11px;
+        color: #c8bfad;
+      }
+      .masthead {
+        border-bottom: 2px solid var(--ink);
+      }
+      .masthead-inner {
+        min-height: 97px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .brand-mark {
+        background: var(--yellow);
+        width: 42px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--ink);
+        box-shadow: 3px 3px 0 var(--ink);
+        transform: rotate(-5deg);
+      }
+      .brand-mark svg {
+        width: 26px;
+        height: 26px;
+      }
+      .wordmark {
+        font-weight: 900;
+        font-size: 34px;
+        line-height: 1;
+        letter-spacing: -2px;
+      }
+      .wordmark span {
+        color: var(--red);
+      }
+      .brand-sub {
+        display: block;
+        font:
+          10px 'Courier New',
+          monospace;
+        letter-spacing: 2px;
+        margin-top: 7px;
+      }
+      .site-nav {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+      }
+      .site-nav > a:first-child {
+        font-weight: bold;
+        text-decoration-thickness: 2px;
+      }
+      .btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 9px;
+        padding: 11px 19px;
+        border: 2px solid var(--ink);
+        background: var(--sheet);
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        min-height: 46px;
+        box-shadow: 3px 3px 0 var(--ink);
+        transition:
+          transform 0.12s,
+          box-shadow 0.12s;
+      }
+      .btn:hover {
+        transform: translate(-1px, -1px);
+        box-shadow: 4px 4px 0 var(--ink);
+      }
+      .btn:active {
+        transform: translate(3px, 3px);
+        box-shadow: none;
+      }
+      .btn.primary {
+        background: var(--red);
+        color: var(--sheet);
+      }
+      .btn.yellow {
+        background: var(--yellow);
+      }
+      .btn.flat {
+        box-shadow: none;
+      }
+      .btn.small {
+        font-size: 13px;
+        padding: 8px 13px;
+        min-height: 40px;
+      }
+      .text-btn {
+        border: 0;
+        background: none;
+        padding: 8px 0;
+        color: var(--red);
+        font-size: 13px;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+      .icon-btn {
+        display: grid;
+        place-items: center;
+        min-width: 40px;
+        min-height: 40px;
+        border: 1px solid var(--line);
+        background: var(--sheet);
+      }
+      .icon-btn:hover {
+        background: var(--paper);
+      }
+      main {
+        min-height: 65vh;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 1.25fr 1fr;
+        align-items: center;
+        gap: 50px;
+        padding: 59px 0 52px;
+      }
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 20px;
+        font:
+          11px 'Courier New',
+          monospace;
+        letter-spacing: 1.7px;
+        font-weight: bold;
+      }
+      .eyebrow::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        background: var(--teal);
+      }
+      .hero h1 {
+        max-width: 650px;
+      }
+      .hero h1 em {
+        font-family: Georgia, 'Times New Roman', serif;
+        font-weight: normal;
+        color: var(--red);
+        letter-spacing: -2px;
+      }
+      .hero p {
+        max-width: 415px;
+        margin: 22px 0 25px;
+        color: var(--muted);
+        font-size: 16px;
+      }
+      .hero .aside-note {
+        font:
+          12px 'Courier New',
+          monospace;
+        margin-left: 8px;
+        transform: rotate(-4deg);
+      }
+      .hero-art {
+        height: 300px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .art-grid {
+        position: absolute;
+        inset: 18px 0 0 35px;
+        background-image: radial-gradient(#b3a58c 1px, transparent 1px);
+        background-size: 13px 13px;
+        mask-image: radial-gradient(ellipse, #000 20%, transparent 70%);
+      }
+      .paper-slip {
+        position: relative;
+        background: var(--sheet);
+        border: 2px solid var(--ink);
+        box-shadow: 6px 6px 0 #d4c9b0;
+        width: 269px;
+        padding: 23px 25px 26px;
+        transform: rotate(-7deg);
+      }
+      .paper-slip::before {
+        content: '';
+        position: absolute;
+        width: 83px;
+        height: 27px;
+        background: #edc655ba;
+        top: -14px;
+        left: 88px;
+        transform: rotate(4deg);
+      }
+      .slip-top {
+        border-bottom: 2px solid var(--ink);
+        padding-bottom: 10px;
+        margin-bottom: 14px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .slip-title {
+        font-weight: 900;
+        font-size: 27px;
+        line-height: 1.2;
+        margin-bottom: 16px;
+      }
+      .slip-row {
+        display: flex;
+        gap: 11px;
+        align-items: center;
+        margin: 12px 0;
+      }
+      .slip-box {
+        width: 18px;
+        height: 18px;
+        display: grid;
+        place-items: center;
+        border: 1.5px solid var(--ink);
+        font-size: 17px;
+        font-weight: bold;
+        line-height: 1;
+        color: var(--teal);
+      }
+      .slip-line {
+        height: 5px;
+        background: #dfd8c7;
+        width: 135px;
+      }
+      .slip-line.short {
+        width: 93px;
+      }
+      .slip-foot {
+        border-top: 1px dashed var(--ink);
+        padding-top: 10px;
+        margin-top: 19px;
+        font:
+          10px 'Courier New',
+          monospace;
+      }
+      .round-stamp {
+        position: absolute;
+        right: 2px;
+        bottom: 20px;
+        border: 2px solid var(--ink);
+        outline: 5px solid var(--paper);
+        border-radius: 50%;
+        height: 105px;
+        width: 105px;
+        background: var(--yellow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        transform: rotate(12deg);
+        font-size: 11px;
+        font-weight: bold;
+        line-height: 1.3;
+        text-align: center;
+      }
+      .round-stamp b {
+        font-size: 33px;
+        line-height: 1;
+      }
+      .art-star {
+        position: absolute;
+        right: 35px;
+        top: 6px;
+        color: var(--red);
+        font:
+          68px Georgia,
+          serif;
+      }
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        border-top: 2px solid var(--ink);
+        padding-top: 26px;
+        margin-bottom: 24px;
+      }
+      .count {
+        display: inline-grid;
+        place-items: center;
+        min-width: 30px;
+        height: 30px;
+        padding: 0 6px;
+        background: var(--yellow);
+        border: 1.5px solid var(--ink);
+        font:
+          15px 'Courier New',
+          monospace;
+        margin-left: 10px;
+        vertical-align: middle;
+      }
+      .search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-bottom: 1.5px solid var(--ink);
+        padding: 8px 0;
+        width: 260px;
+      }
+      .search svg {
+        width: 18px;
+        height: 18px;
+      }
+      .search input {
+        width: 100%;
+        min-width: 0;
+        border: 0;
+        background: transparent;
+        outline-offset: 1px;
+        font-size: 13px;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+      .form-card {
+        border: 2px solid var(--ink);
+        background: var(--sheet);
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        min-height: 286px;
+      }
+      .card-band {
+        height: 42px;
+        background: var(--yellow);
+        border-bottom: 2px solid var(--ink);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 18px;
+        font:
+          11px 'Courier New',
+          monospace;
+        letter-spacing: 1px;
+      }
+      .form-card:nth-child(3n + 2) .card-band {
+        background: #bcd5c8;
+      }
+      .form-card:nth-child(3n + 3) .card-band {
+        background: #e7bcaa;
+      }
+      .card-body {
+        padding: 23px 21px 18px;
+        flex: 1;
+      }
+      .card-body h3 {
+        font-size: 23px;
+        margin-bottom: 12px;
+      }
+      .card-body p {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+      .card-meta {
+        margin-top: 19px;
+        font:
+          11px 'Courier New',
+          monospace;
+        color: var(--muted);
+      }
+      .card-actions {
+        padding: 15px 20px;
+        border-top: 1px dashed var(--line);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+      }
+      .card-actions > a:last-child {
+        font-size: 12px;
+      }
+      .no-search {
+        grid-column: 1/-1;
+        padding: 45px;
+        text-align: center;
+        border: 1px dashed var(--ink);
+      }
+      .how-it-works {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        margin: 44px 0 48px;
+        padding-top: 23px;
+        border-top: 1px solid var(--line);
+      }
+      .step {
+        display: flex;
+        gap: 13px;
+        align-items: baseline;
+        font-size: 12px;
+      }
+      .step b {
+        font:
+          20px Georgia,
+          serif;
+        color: var(--red);
+      }
+      .step strong {
+        display: block;
+        font-size: 13px;
+        margin-bottom: 3px;
+      }
+      .step p {
+        color: var(--muted);
+      }
+      .footer {
+        border-top: 2px solid var(--ink);
+        padding: 22px 0;
+        margin-top: 36px;
+      }
+      .footer .wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .footer-brand {
+        font-weight: 900;
+        font-size: 20px;
+        letter-spacing: -1px;
+      }
+      .footer-note {
+        font:
+          11px 'Courier New',
+          monospace;
+        color: var(--muted);
+      }
+      .footer-tag {
+        border: 1px solid var(--ink);
+        padding: 4px 8px;
+        font:
+          10px 'Courier New',
+          monospace;
+      }
+      .page-top {
+        padding: 34px 0 28px;
+      }
+      .back {
+        font-size: 12px;
+        color: var(--muted);
+        display: inline-block;
+        margin-bottom: 21px;
+      }
+      .page-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 20px;
+      }
+      .page-heading h1 {
+        font-size: 38px;
+        letter-spacing: -1.5px;
+      }
+      .page-heading p {
+        color: var(--muted);
+        font-size: 14px;
+        margin-top: 10px;
+      }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font:
+          11px 'Courier New',
+          monospace;
+        padding: 5px 9px;
+        border: 1px solid var(--ink);
+        background: var(--yellow);
+        white-space: nowrap;
+      }
+      .tag.green {
+        background: #d7e6dc;
+        color: #164e45;
+        border-color: var(--teal);
+      }
+      .workspace {
+        display: grid;
+        grid-template-columns: 228px minmax(0, 1fr);
+        gap: 29px;
+        padding-top: 26px;
+        border-top: 2px solid var(--ink);
+        padding-bottom: 20px;
+      }
+      .sidebar {
+        align-self: start;
+        position: sticky;
+        top: 20px;
+      }
+      .sidebar-title {
+        font:
+          11px 'Courier New',
+          monospace;
+        font-weight: bold;
+        letter-spacing: 1.3px;
+        margin-bottom: 16px;
+      }
+      .type-button {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        text-align: left;
+        padding: 12px;
+        background: var(--sheet);
+        border: 1.5px solid var(--ink);
+        border-bottom: 0;
+        font-size: 13px;
+      }
+      .type-button:last-of-type {
+        border-bottom: 1.5px solid var(--ink);
+      }
+      .type-button:hover {
+        background: var(--yellow);
+      }
+      .type-symbol {
+        font:
+          18px 'Courier New',
+          monospace;
+        width: 22px;
+        text-align: center;
+      }
+      .note {
+        padding: 18px;
+        background: #f2e3b3;
+        border: 1px solid #c6b77f;
+        margin-top: 25px;
+        font-size: 12px;
+        color: #564b33;
+      }
+      .note b {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--ink);
+      }
+      .sheet {
+        border: 2px solid var(--ink);
+        background: var(--sheet);
+        box-shadow: var(--shadow);
+        padding: 27px;
+      }
+      .sheet-heading {
+        border-top: 7px solid var(--yellow);
+      }
+      .field {
+        display: block;
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 18px;
+      }
+      .field:last-child {
+        margin-bottom: 0;
+      }
+      .field > input,
+      .field > textarea,
+      .field > select {
+        display: block;
+        margin-top: 7px;
+      }
+      .input {
+        width: 100%;
+        min-width: 0;
+        border: 1px solid #a69c88;
+        background: #fffdf7;
+        padding: 11px 12px;
+        border-radius: 0;
+        font-size: 14px;
+      }
+      .input.title-input {
+        font-size: 25px;
+        letter-spacing: -0.5px;
+        font-weight: bold;
+        padding: 8px 0;
+        border-width: 0 0 1px;
+        background: transparent;
+      }
+      .input:focus {
+        border-color: var(--teal);
+      }
+      textarea.input {
+        resize: vertical;
+        min-height: 77px;
+      }
+      .question-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 19px;
+      }
+      .question-number {
+        font:
+          11px 'Courier New',
+          monospace;
+        letter-spacing: 1.2px;
+        color: var(--muted);
+      }
+      .type-select {
+        font-size: 12px;
+        padding: 6px 9px;
+        border: 1px solid var(--line);
+        background: var(--paper);
+        max-width: 220px;
+      }
+      .option-editor {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 9px;
+      }
+      .option-dot {
+        width: 15px;
+        height: 15px;
+        border: 1px solid var(--muted);
+        flex-shrink: 0;
+        border-radius: 50%;
+      }
+      .option-dot.square {
+        border-radius: 0;
+      }
+      .option-editor .input {
+        padding: 8px 10px;
+      }
+      .question-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        border-top: 1px solid var(--line);
+        padding-top: 13px;
+        margin-top: 20px;
+        font-size: 12px;
+      }
+      .check-label {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .check-label input {
+        accent-color: var(--teal);
+        width: 17px;
+        height: 17px;
+      }
+      .answer-placeholder {
+        padding: 12px 0;
+        border-bottom: 1px dashed #b3a58c;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .add-question {
+        width: 100%;
+        padding: 16px;
+        background: transparent;
+        border: 1.5px dashed var(--ink);
+        font-weight: bold;
+      }
+      .add-question:hover {
+        background: #f1e5c3;
+      }
+      .save-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: center;
+        padding: 9px 0;
+      }
+      .save-row p {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .error {
+        font-size: 12px;
+        color: var(--red);
+        margin-top: 10px;
+      }
+      .error:empty {
+        display: none;
+      }
+      .fill-layout {
+        max-width: 736px;
+        margin: 34px auto 50px;
+      }
+      .fill-top {
+        padding: 30px 33px 26px;
+        border-top: 8px solid var(--red);
+        position: relative;
+      }
+      .fill-top h1 {
+        font-size: 36px;
+        letter-spacing: -1.2px;
+        margin: 15px 0;
+      }
+      .fill-top p {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .fill-meta {
+        display: flex;
+        gap: 17px;
+        border-top: 1px dashed var(--line);
+        padding-top: 17px;
+        margin-top: 22px;
+        font:
+          11px 'Courier New',
+          monospace;
+        color: var(--muted);
+        flex-wrap: wrap;
+      }
+      .fill-question {
+        margin-top: 19px;
+        border: 1.5px solid var(--ink);
+        background: var(--sheet);
+        padding: 25px 32px;
+      }
+      .fill-question legend {
+        float: left;
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 17px;
+        line-height: 1.5;
+      }
+      .fill-question .question-content {
+        clear: both;
+      }
+      .question-index {
+        font:
+          12px 'Courier New',
+          monospace;
+        color: var(--muted);
+        margin-right: 13px;
+      }
+      .question-hint {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 10px;
+      }
+      .choice {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        margin-top: 8px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      .choice:has(input:checked) {
+        border-color: var(--teal);
+        background: #e6efe5;
+      }
+      .choice input {
+        accent-color: var(--teal);
+        width: 17px;
+        height: 17px;
+        margin: 0;
+      }
+      .fill-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 24px;
+      }
+      .progress-text {
+        font:
+          11px 'Courier New',
+          monospace;
+        color: var(--muted);
+      }
+      .progress-track {
+        height: 5px;
+        width: 155px;
+        background: #ded3bc;
+        margin-top: 7px;
+      }
+      .progress-track span {
+        display: block;
+        height: 100%;
+        background: var(--teal);
+        width: 0;
+        transition: width 0.2s;
+      }
+      .success-card {
+        text-align: center;
+        padding: 60px 30px;
+        max-width: 650px;
+        margin: 66px auto;
+      }
+      .success-stamp {
+        display: inline-block;
+        padding: 9px 17px;
+        border: 3px double var(--teal);
+        color: var(--teal);
+        font:
+          bold 19px 'Courier New',
+          monospace;
+        transform: rotate(-7deg);
+        margin: 10px 0 30px;
+      }
+      .success-card h1 {
+        font-size: 37px;
+        margin-bottom: 17px;
+      }
+      .success-card p {
+        color: var(--muted);
+        max-width: 390px;
+        margin: 0 auto 24px;
+        font-size: 14px;
+      }
+      .success-card .row {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .response-layout {
+        display: grid;
+        grid-template-columns: 250px minmax(0, 1fr);
+        gap: 28px;
+        border-top: 2px solid var(--ink);
+        padding-top: 27px;
+      }
+      .receipt {
+        padding: 25px;
+        border: 1.5px solid var(--ink);
+        background: var(--sheet);
+        box-shadow: var(--shadow);
+      }
+      .receipt-number {
+        font:
+          76px/1 Georgia,
+          serif;
+        margin: 15px 0 8px;
+        color: var(--teal);
+      }
+      .receipt hr {
+        border: 0;
+        border-top: 1px dashed var(--ink);
+        margin: 21px 0;
+      }
+      .receipt .mono {
+        font-size: 10px;
+      }
+      .response-card {
+        border: 1.5px solid var(--ink);
+        background: var(--sheet);
+      }
+      .response-card summary {
+        padding: 18px 22px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        list-style: none;
+      }
+      .response-card summary::-webkit-details-marker {
+        display: none;
+      }
+      .response-card summary::after {
+        content: '+';
+        font:
+          25px 'Courier New',
+          monospace;
+      }
+      .response-card[open] summary::after {
+        content: '−';
+      }
+      .response-card[open] summary {
+        border-bottom: 1px solid var(--ink);
+        background: #e1eadc;
+      }
+      .response-title {
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .response-date {
+        font:
+          11px 'Courier New',
+          monospace;
+        color: var(--muted);
+        display: block;
+        margin-top: 4px;
+      }
+      .answers {
+        padding: 0 23px;
+      }
+      .answer {
+        padding: 18px 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .answer:last-child {
+        border: 0;
+      }
+      .answer dt {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 7px;
+      }
+      .answer dd {
+        font-size: 14px;
+        margin: 0;
+      }
+      .answer-tag {
+        display: inline-block;
+        padding: 3px 9px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        margin: 0 5px 4px 0;
+      }
+      .state-panel {
+        text-align: center;
+        padding: 45px 25px;
+        border: 1.5px dashed var(--ink);
+        background: var(--sheet);
+      }
+      .state-panel h2 {
+        font-size: 24px;
+        margin: 15px 0 12px;
+      }
+      .state-panel p {
+        font-size: 14px;
+        color: var(--muted);
+        max-width: 400px;
+        margin: 0 auto 23px;
+      }
+      .state-icon {
+        display: inline-grid;
+        place-items: center;
+        width: 55px;
+        height: 55px;
+        font:
+          29px Georgia,
+          serif;
+        background: var(--yellow);
+        border: 1.5px solid var(--ink);
+        box-shadow: 3px 3px 0 var(--ink);
+      }
+      .state-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+      }
+      .state-label {
+        font:
+          11px 'Courier New',
+          monospace;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+      }
+      .skeleton {
+        height: 12px;
+        background: #e6ddc9;
+        margin: 14px auto;
+        width: 75%;
+      }
+      .skeleton.short {
+        width: 45%;
+      }
+      .state-wide {
+        grid-column: 1/-1;
+      }
+      .toast {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 10;
+        max-width: min(410px, calc(100vw - 32px));
+        background: var(--ink);
+        color: var(--sheet);
+        padding: 16px 22px;
+        border-left: 5px solid var(--yellow);
+        font-size: 13px;
+        box-shadow: 4px 4px 0 #aa9d85;
+      }
+      .toast:empty {
+        display: none;
+      }
+      @media (min-width: 1400px) {
+        .hero {
+          padding-top: 70px;
+          padding-bottom: 64px;
+        }
+      }
+      @media (max-width: 900px) {
+        .review-inner {
+          flex-wrap: wrap;
+        }
+        .review-note {
+          display: none;
+        }
+        .hero {
+          gap: 20px;
+        }
+        .hero-art {
+          transform: scale(0.9);
+        }
+        .cards {
+          gap: 15px;
+        }
+        .card-body {
+          padding: 20px 15px;
+        }
+        .card-actions {
+          padding: 14px;
+          flex-wrap: wrap;
+        }
+        .workspace {
+          grid-template-columns: 190px minmax(0, 1fr);
+          gap: 22px;
+        }
+        .response-layout {
+          grid-template-columns: 200px minmax(0, 1fr);
+        }
+      }
+      @media (max-width: 680px) {
+        .wrap {
+          padding: 0 20px;
+        }
+        .review-inner {
+          padding: 10px 15px;
+          gap: 8px;
+        }
+        .review-label {
+          font-size: 11px;
+        }
+        .review-nav {
+          gap: 1px;
+        }
+        .review-nav a {
+          font-size: 10px;
+          padding: 5px 7px;
+        }
+        .masthead-inner {
+          min-height: 86px;
+          gap: 10px;
+        }
+        .brand-mark {
+          width: 32px;
+          height: 37px;
+        }
+        .brand-mark svg {
+          width: 22px;
+        }
+        .brand {
+          gap: 9px;
+        }
+        .wordmark {
+          font-size: 29px;
+        }
+        .brand-sub {
+          font-size: 8px;
+          letter-spacing: 1px;
+        }
+        .site-nav {
+          gap: 14px;
+        }
+        .site-nav > a:first-child {
+          display: none;
+        }
+        .site-nav .btn {
+          padding: 8px 11px;
+          font-size: 12px;
+          min-height: 40px;
+        }
+        .hero {
+          grid-template-columns: 1fr;
+          padding: 36px 0 30px;
+          gap: 12px;
+        }
+        .hero h1 {
+          font-size: 43px;
+          letter-spacing: -2px;
+        }
+        .hero p {
+          font-size: 15px;
+          margin-top: 16px;
+        }
+        .eyebrow {
+          font-size: 10px;
+          margin-bottom: 16px;
+        }
+        .hero-art {
+          height: 270px;
+          max-width: 355px;
+          width: 100%;
+          margin: auto;
+          transform: scale(0.94);
+        }
+        .hero .aside-note {
+          font-size: 10px;
+        }
+        .section-head {
+          flex-wrap: wrap;
+          padding-top: 22px;
+        }
+        .section-head h2 {
+          font-size: 27px;
+        }
+        .search {
+          width: 100%;
+        }
+        .cards {
+          grid-template-columns: 1fr;
+          gap: 21px;
+        }
+        .form-card {
+          min-height: 0;
+        }
+        .card-body {
+          padding: 23px;
+        }
+        .card-actions {
+          padding: 17px 22px;
+        }
+        .how-it-works {
+          grid-template-columns: 1fr;
+          gap: 17px;
+          margin: 32px 0;
+        }
+        .step strong {
+          display: inline;
+          margin-right: 5px;
+        }
+        .step p {
+          display: inline;
+        }
+        .footer .wrap {
+          flex-wrap: wrap;
+        }
+        .footer-tag {
+          display: none;
+        }
+        .footer-note {
+          font-size: 10px;
+        }
+        .page-heading {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .page-heading h1 {
+          font-size: 32px;
+        }
+        .page-top {
+          padding-top: 25px;
+        }
+        .workspace,
+        .response-layout {
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+        .sidebar {
+          position: static;
+        }
+        .type-buttons {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }
+        .type-button,
+        .type-button:last-of-type {
+          border: 1.5px solid var(--ink);
+          font-size: 12px;
+          padding: 10px;
+          gap: 7px;
+        }
+        .sidebar .note {
+          display: none;
+        }
+        .sheet {
+          padding: 20px;
+        }
+        .question-head {
+          flex-wrap: wrap;
+        }
+        .type-select {
+          max-width: 100%;
+          min-height: 36px;
+        }
+        .input.title-input {
+          font-size: 21px;
+        }
+        .fill-layout {
+          margin: 25px auto;
+        }
+        .fill-top {
+          padding: 24px;
+        }
+        .fill-top h1 {
+          font-size: 31px;
+        }
+        .fill-question {
+          padding: 20px;
+          margin-left: 0;
+          margin-right: 0;
+        }
+        .fill-question legend {
+          font-size: 15px;
+        }
+        .fill-bottom {
+          flex-wrap: wrap;
+        }
+        .progress-track {
+          width: 120px;
+        }
+        .fill-bottom .btn {
+          font-size: 12px;
+          padding: 11px 13px;
+        }
+        .save-row {
+          align-items: flex-start;
+        }
+        .save-row p {
+          max-width: 140px;
+          font-size: 11px;
+        }
+        .receipt {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          padding: 20px;
+        }
+        .receipt-number {
+          font-size: 45px;
+          margin: 0;
+        }
+        .receipt hr,
+        .receipt .receipt-bottom {
+          display: none;
+        }
+        .state-grid {
+          grid-template-columns: 1fr;
+        }
+        .state-wide {
+          grid-column: auto;
+        }
+        .success-card {
+          margin: 35px 0;
+          padding: 40px 20px;
+        }
+        .success-card h1 {
+          font-size: 31px;
+        }
+        .response-card summary {
+          padding: 16px;
+        }
+        .toast {
+          right: 16px;
+          bottom: 16px;
+        }
+      }
+      .field > textarea.input {
+        font-weight: 400;
+      }
+      @media (max-width: 680px) {
+        .hero > div:first-child > .row {
+          flex-wrap: wrap;
+        }
+        .hero .btn {
+          white-space: nowrap;
+        }
+        .hero-art {
+          margin-top: 20px;
+          height: 300px;
+        }
+        .review-note {
+          display: block;
+          width: 100%;
+          font-size: 10px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+      }
+      @media print {
+        .review-bar,
+        .site-nav,
+        .footer,
+        .toast,
+        .sidebar,
+        .back {
+          display: none;
+        }
+        body {
+          background: white;
+        }
+        .wrap {
+          max-width: none;
+        }
+        .sheet,
+        .form-card {
+          box-shadow: none;
+        }
+        .fill-question,
+        .response-card {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Перейти до вмісту</a>
+    <div class="review-bar">
+      <div class="review-inner">
+        <div class="review-label"><b>МАКЕТ / 01</b> Теплий ретро-мінімалізм</div>
+        <nav class="review-nav" aria-label="Екрани макета">
+          <a href="#home" data-screen="home">01 Головна</a
+          ><a href="#builder" data-screen="builder">02 Конструктор</a
+          ><a href="#fill" data-screen="fill">03 Заповнення</a
+          ><a href="#responses" data-screen="responses">04 Відповіді</a
+          ><a href="#states" data-screen="states">05 Стани</a>
+        </nav>
+        <span class="review-note">Демо-дані · без збереження після оновлення</span>
+      </div>
+    </div>
+    <header class="masthead">
+      <div class="wrap masthead-inner">
+        <a class="brand" href="#home" aria-label="форма. — головна">
+          <span class="brand-mark" aria-hidden="true"
+            ><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M6 3h16v22H6zM10 9h8M10 14h8M10 19h5" /></svg
+          ></span>
+          <span
+            ><span class="wordmark">форма<span>.</span></span
+            ><span class="brand-sub">ПИТАННЯ МАЮТЬ ЗНАЧЕННЯ</span></span
+          >
+        </a>
+        <nav class="site-nav" aria-label="Основна навігація">
+          <a href="#home">Усі форми</a
+          ><a class="btn primary" href="#builder" data-new
+            ><span aria-hidden="true">＋</span> Нова форма</a
+          >
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="wrap" tabindex="-1"></main>
+    <footer class="footer">
+      <div class="wrap">
+        <div class="row">
+          <span class="footer-brand">форма.</span
+          ><span class="footer-note">Створюй. Запитуй. Дізнавайся.</span>
+        </div>
+        <span class="footer-tag">ЗРОБЛЕНО З УВАГОЮ ДО ДЕТАЛЕЙ</span
+        ><span class="footer-note">Forms Lite / навчальний проєкт</span>
+      </div>
+    </footer>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <noscript
+      ><p class="wrap">
+        Для перемикання екранів інтерактивного макета увімкни JavaScript у браузері.
+      </p></noscript
+    >
+    <script>
+      // Isolated design prototype. No API requests, dependencies, or persistent storage.
+      const queryElement = (selector, root = document) => root.querySelector(selector);
+      const queryElements = (selector, root = document) => [...root.querySelectorAll(selector)];
+      const escapeHtml = (value) =>
+        String(value).replace(
+          /[&<>"']/g,
+          (character) =>
+            ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character],
+        );
+      const questionTypeLabels = {
+        text: 'Коротка відповідь',
+        radio: 'Один варіант',
+        checkbox: 'Кілька варіантів',
+        date: 'Дата',
+      };
+      let nextId = 20;
+      const createQuestion = (title, type = 'text', required = false, options = []) => ({
+        id: ++nextId,
+        title,
+        type,
+        required,
+        options,
+      });
+      const forms = [
+        {
+          id: 'course',
+          title: 'Як вам навчання?',
+          description:
+            'Допоможіть зробити курс із веброзробки кращим. Розкажіть, що сподобалось і чого бракувало.',
+          date: '02.10.2026',
+          questions: [
+            createQuestion('Як вас звати?', 'text', true),
+            createQuestion('Як вам формат занять?', 'radio', true, [
+              'Усе подобається',
+              'Є що покращити',
+              'Мені не підходить',
+            ]),
+            createQuestion('Які теми були найцікавішими?', 'checkbox', false, [
+              'HTML та CSS',
+              'JavaScript',
+              'React',
+            ]),
+            createQuestion('Коли вам зручно зустрітися?', 'date'),
+          ],
+        },
+        {
+          id: 'workshop',
+          title: 'Зустрінемось на воркшопі',
+          description:
+            'Невелика зустріч, великі ідеї. Зареєструйтеся на практичний воркшоп із дизайну.',
+          date: '01.10.2026',
+          questions: [
+            createQuestion('Як вас звати?', 'text', true),
+            createQuestion('Який напрям вас цікавить?', 'radio', true, [
+              'Типографіка',
+              'Вебдизайн',
+              'Ілюстрація',
+            ]),
+            createQuestion('Оберіть дату', 'date', true),
+          ],
+        },
+        {
+          id: 'feedback',
+          title: 'Маєте хвилинку?',
+          description:
+            'Ваш погляд допоможе нам стати кращими. Залиште короткий відгук про наш проєкт.',
+          date: '29.09.2026',
+          questions: [
+            createQuestion('Що вам сподобалось?', 'text', true),
+            createQuestion('Що варто покращити?', 'text'),
+            createQuestion('Порадили б нас друзям?', 'radio', true, ['Так', 'Можливо', 'Ні']),
+          ],
+        },
+      ];
+      const responses = {
+        course: [
+          {
+            date: '02.10.2026 · 14:32',
+            values: [['Олена'], ['Усе подобається'], ['JavaScript', 'React'], ['2026-10-08']],
+          },
+          {
+            date: '02.10.2026 · 12:18',
+            values: [['Андрій'], ['Є що покращити'], ['HTML та CSS'], []],
+          },
+          {
+            date: '01.10.2026 · 17:45',
+            values: [['Марія'], ['Усе подобається'], ['React'], ['2026-10-09']],
+          },
+        ],
+        workshop: [],
+        feedback: [],
+      };
+      let selectedFormId = 'course';
+      let draft = structuredClone(forms[0]);
+      let isSubmitted = false;
+      const savedAnswers = {};
+      let toastTimer;
+      const getSelectedForm = () => forms.find((form) => form.id === selectedFormId) || forms[0];
+      const back = () => '<a class="back" href="#home">← До всіх форм</a>';
+      const requiredMark = (required) =>
+        required ? '<span class="red" aria-label="обов’язкове"> *</span>' : '';
+      const searchIcon =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg>';
+      const docIcon =
+        '<svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 2h10v16H5zM8 6h4M8 10h4M8 14h3"/></svg>';
+      function toast(message) {
+        queryElement('#toast').textContent = message;
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => (queryElement('#toast').textContent = ''), 4500);
+      }
+      function navigate(screen) {
+        if (location.hash === '#' + screen) {
+          render();
+        } else {
+          location.hash = screen;
+        }
+      }
+      function home() {
+        return `
+      <section class="hero" aria-labelledby="home-title">
+        <div><div class="eyebrow">ПРОСТІ ФОРМИ. ЖИВІ ВІДПОВІДІ.</div><h1 id="home-title">Хороші питання.<br><em>Корисні відповіді.</em></h1><p>Для цікавих ідей, чесних відгуків і маленьких досліджень. Зберіть усе важливе в одній формі.</p><div class="row"><a class="btn primary" href="#builder" data-new>＋ Створити форму</a><span class="aside-note">почнімо з чистого аркуша ↗</span></div></div>
+        <div class="hero-art" aria-hidden="true"><div class="art-grid"></div><span class="art-star">✳</span><div class="paper-slip"><div class="slip-top mono"><span>АНКЕТА № 001</span><span>↗</span></div><div class="slip-title">А що думаєте ви?</div><div class="slip-row"><span class="slip-box">✓</span><span class="slip-line"></span></div><div class="slip-row"><span class="slip-box"></span><span class="slip-line short"></span></div><div class="slip-row"><span class="slip-box">✓</span><span class="slip-line"></span></div><div class="slip-foot">КОЖНА ВІДПОВІДЬ — НОВИЙ ПОГЛЯД.</div></div><div class="round-stamp"><b>☺</b>менше зайвого,<br>більше сенсу</div></div>
+      </section>
+      <section aria-labelledby="forms-title"><div class="section-head"><h2 id="forms-title">Усі форми <span class="count">${forms.length}</span></h2><label class="search">${searchIcon}<span class="sr-only">Знайти форму</span><input id="search" type="search" placeholder="Знайти ту саму форму…"></label></div><div class="cards" id="cards">${cards(forms)}</div></section>
+      <div class="how-it-works"><div class="step"><b>01.</b><div><strong>Складіть питання</strong><p>Текст, варіанти відповіді чи дата.</p></div></div><div class="step"><b>02.</b><div><strong>Поділіться формою</strong><p>Надішліть посилання тим, кого питаєте.</p></div></div><div class="step"><b>03.</b><div><strong>Почуйте відповіді</strong><p>Усі думки зібрані в одному місці.</p></div></div></div>`;
+      }
+      function cards(list) {
+        return list.length
+          ? list
+              .map(
+                (form) =>
+                  `<article class="form-card"><div class="card-band"><span>ФОРМА / ${String(forms.indexOf(form) + 1).padStart(2, '0')}</span>${docIcon}</div><div class="card-body"><h3>${escapeHtml(form.title)}</h3><p>${escapeHtml(form.description || 'Нова форма для ваших запитань.')}</p><div class="card-meta">СТВОРЕНО ${escapeHtml(form.date)}</div></div><div class="card-actions"><a class="btn small flat" href="#fill" data-form="${form.id}">Заповнити <span aria-hidden="true">↗</span></a><a href="#responses" data-form="${form.id}" aria-label="Відповіді: ${escapeHtml(form.title)}">Відповіді →</a></div></article>`,
+              )
+              .join('')
+          : '<p class="no-search">Такої форми не знайшлося. Спробуйте іншу назву.</p>';
+      }
+      function editor(question, i) {
+        return `<section class="sheet" data-question="${question.id}" aria-label="Питання ${i + 1}"><div class="question-head"><span class="question-number">ПИТАННЯ ${String(i + 1).padStart(2, '0')}</span><label><span class="sr-only">Тип питання ${i + 1}</span><select class="type-select" data-type>${Object.entries(
+          questionTypeLabels,
+        )
+          .map(
+            ([key, label]) =>
+              `<option value="${key}" ${question.type === key ? 'selected' : ''}>${label}</option>`,
+          )
+          .join(
+            '',
+          )}</select></label></div><label class="field">Текст питання<input class="input" data-title value="${escapeHtml(question.title)}" placeholder="Що хочете дізнатися?" required></label>${question.type === 'radio' || question.type === 'checkbox' ? `<div>${question.options.map((option, j) => `<div class="option-editor"><span class="option-dot ${question.type === 'checkbox' ? 'square' : ''}" aria-hidden="true"></span><label style="flex:1;min-width:0"><span class="sr-only">Варіант ${j + 1} питання ${i + 1}</span><input class="input" data-option="${j}" value="${escapeHtml(option)}" placeholder="Текст варіанта" required></label><button class="icon-btn" type="button" data-remove-option="${j}" aria-label="Видалити варіант ${j + 1}">×</button></div>`).join('')}</div><button class="text-btn" type="button" data-add-option>＋ Додати варіант</button>` : `<div class="answer-placeholder">${question.type === 'date' ? 'дд.мм.рррр' : 'Тут буде коротка відповідь…'}</div>`}<div class="question-foot"><label class="check-label"><input type="checkbox" data-required ${question.required ? 'checked' : ''}> Обов’язкове питання</label><button class="text-btn" type="button" data-delete>Видалити</button></div></section>`;
+      }
+      function builder() {
+        return `<div class="page-top">${back()}<div class="page-heading"><div><h1>Скласти нову форму</h1><p>Одне хороше питання — вже початок розмови.</p></div><span class="tag">✎ НОВА ФОРМА</span></div></div><div class="workspace"><aside class="sidebar"><h2 class="sidebar-title">ДОДАТИ ПИТАННЯ</h2><div class="type-buttons">${Object.entries(
+          questionTypeLabels,
+        )
+          .map(
+            ([key, label], i) =>
+              `<button type="button" class="type-button" data-add="${key}"><span class="type-symbol" aria-hidden="true">${['Aa', '◉', '☑', '▦'][i]}</span>${label}<span style="margin-left:auto">+</span></button>`,
+          )
+          .join(
+            '',
+          )}</div><div class="note"><b>Маленька порада ↗</b>Одне питання — одна думка. Так відповідати простіше, а відповіді будуть точнішими.</div></aside><form id="builder-form" class="stack"><section class="sheet sheet-heading"><div class="question-number" style="margin-bottom:17px">ПОЧНІМО З ГОЛОВНОГО</div><label class="field">Назва форми <span class="red">*</span><input class="input title-input" id="draft-title" value="${escapeHtml(draft.title)}" placeholder="Дайте формі назву" required></label><label class="field">Кілька слів для учасників <span class="muted">· необов’язково</span><textarea class="input" id="draft-description" placeholder="Про що ця форма?">${escapeHtml(draft.description)}</textarea></label></section><div id="editors" class="stack">${draft.questions.map(editor).join('')}</div><button type="button" class="add-question" data-add="text">＋ Ще одне питання</button><p class="error" id="builder-error" role="alert"></p><div class="save-row"><p>Усе готово?<br>Збережіть форму й збирайте відповіді.</p><button class="btn primary" type="submit">Зберегти форму <span aria-hidden="true">↗</span></button></div></form></div>`;
+      }
+      function answerControl(question) {
+        const name = 'q-' + question.id;
+        if (question.type === 'text' || question.type === 'date') {
+          return `<label><span class="sr-only">${escapeHtml(question.title)}</span><input class="input" type="${question.type}" name="${name}" placeholder="Ваша відповідь" ${question.required ? 'required' : ''}></label>`;
+        }
+        return `${question.type === 'checkbox' ? '<p class="question-hint">Можна обрати кілька варіантів.</p>' : ''}${question.options.map((optionValue, i) => `<label class="choice"><input type="${question.type}" name="${name}" value="${escapeHtml(optionValue)}" ${question.type === 'radio' && question.required && i === 0 ? 'required' : ''}><span>${escapeHtml(optionValue)}</span></label>`).join('')}`;
+      }
+      function fill() {
+        if (isSubmitted) {
+          return success();
+        }
+        const form = getSelectedForm();
+        return `<div class="fill-layout">${back()}<section class="sheet fill-top"><span class="mono">ФОРМА / ${String(forms.indexOf(form) + 1).padStart(2, '0')}</span><h1>${escapeHtml(form.title)}</h1><p>${escapeHtml(form.description)}</p><div class="fill-meta"><span>КІЛЬКІСТЬ ПИТАНЬ: ${form.questions.length}</span><span><span class="red">*</span> ОБОВ’ЯЗКОВЕ ПОЛЕ</span></div></section><form id="fill-form" novalidate>${form.questions.map((question, i) => `<fieldset class="fill-question" data-answer-question="${question.id}"><legend><span class="question-index">${String(i + 1).padStart(2, '0')}.</span>${escapeHtml(question.title)}${requiredMark(question.required)}</legend><div class="question-content">${answerControl(question)}<p class="error" id="error-${question.id}" role="alert"></p></div></fieldset>`).join('')}<div class="fill-bottom"><div><div class="progress-text" id="progress-text" aria-live="polite">Заповнено: 0 із ${form.questions.length}</div><div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div></div><button class="btn primary" type="submit">Надіслати відповіді <span aria-hidden="true">↗</span></button></div></form></div>`;
+      }
+      function success() {
+        return `<section class="sheet success-card"><div class="success-stamp">✓ ВІДПОВІДЬ ПРИЙНЯТО</div><h1>Дякуємо за ваш час.</h1><p>Кожна думка важлива. Ваші відповіді на форму «${escapeHtml(getSelectedForm().title)}» вже зібрані разом з іншими.</p><div class="row"><a class="btn yellow" href="#home">До всіх форм</a><a class="text-btn" href="#responses">Переглянути відповіді →</a></div></section>`;
+      }
+      function responsePage() {
+        const form = getSelectedForm(),
+          items = responses[form.id] || [];
+        return `<div class="page-top">${back()}<div class="page-heading"><div><div class="eyebrow">ПОЧУТИ КОЖНОГО</div><h1>${escapeHtml(form.title)}</h1><p>Відповіді учасників, зібрані в одному місці.</p></div><a class="btn small" href="#fill">Відкрити форму ↗</a></div></div><div class="response-layout"><aside class="sidebar"><div class="receipt"><div class="mono">ОТРИМАНО ВІДПОВІДЕЙ</div><div class="receipt-number">${String(items.length).padStart(2, '0')}</div><div class="mono muted">КОЖНА ДУМКА ВАЖЛИВА</div><hr><div class="receipt-bottom"><div class="row between mono"><span>ПИТАНЬ У ФОРМІ</span><b>${form.questions.length}</b></div><div class="row between mono" style="margin-top:8px"><span>СТВОРЕНО</span><b>${escapeHtml(form.date)}</b></div></div></div><div class="note"><b>За цифрами — люди.</b>Відкрийте відповідь, щоб побачити кожне питання й те, що розповів учасник.</div></aside><div class="stack" style="align-self:start">${items.length ? items.map((item, i) => `<details class="response-card" ${i === 0 ? 'open' : ''}><summary><span><span class="response-title">Відповідь № ${String(i + 1).padStart(2, '0')}</span><span class="response-date">${escapeHtml(item.date)}</span></span></summary><dl class="answers">${form.questions.map((question, j) => `<div class="answer"><dt>${String(j + 1).padStart(2, '0')}. ${escapeHtml(question.title)}</dt><dd>${item.values[j]?.length ? item.values[j].map((answerValue) => `<span class="${question.type === 'checkbox' ? 'answer-tag' : ''}">${escapeHtml(question.type === 'date' ? answerValue.split('-').reverse().join('.') : answerValue)}</span>`).join(question.type === 'checkbox' ? '' : ' · ') : '<span class="muted">Без відповіді</span>'}</dd></div>`).join('')}</dl></details>`).join('') : emptyResponses()}</div></div>`;
+      }
+      function emptyResponses() {
+        return '<div class="state-panel"><span class="state-icon" aria-hidden="true">↗</span><h2>Розмова ще попереду.</h2><p>Тут з’являться відповіді. Поділіться посиланням на форму з першими учасниками.</p><a class="btn small" href="#fill">Відкрити форму ↗</a></div>';
+      }
+      function states() {
+        return `<div class="page-top">${back()}<div class="page-heading"><div><h1>Увага до дрібниць.</h1><p>Ескізи порожніх екранів, очікування, помилок і підтвердження.</p></div><span class="tag">ГАЛЕРЕЯ СТАНІВ</span></div></div><div class="state-grid"><section><p class="state-label">01 / ЩЕ НЕМАЄ ФОРМ</p><div class="state-panel"><span class="state-icon" aria-hidden="true">＋</span><h2>Місце для першої ідеї.</h2><p>Створіть свою першу форму. Почати можна з одного простого питання.</p><a class="btn primary" href="#builder" data-new>Створити форму</a></div></section><section><p class="state-label">02 / ЩЕ НЕМАЄ ВІДПОВІДЕЙ</p>${emptyResponses()}</section><section><p class="state-label">03 / ЗАВАНТАЖЕННЯ</p><div class="state-panel"><span class="mono">ЗБИРАЄМО ВАШІ ФОРМИ…</span><div class="skeleton" style="margin-top:30px"></div><div class="skeleton short"></div><div class="skeleton"></div><p style="margin-top:25px;margin-bottom:0">Ще мить — і все буде на місці.</p></div></section><section><p class="state-label">04 / ПОМИЛКА ЗАВАНТАЖЕННЯ</p><div class="state-panel"><span class="state-icon" style="background:#e7bcaa" aria-hidden="true">!</span><h2>Не вдалося завантажити.</h2><p>Перевірте з’єднання та спробуйте ще раз.</p><button type="button" class="btn small" data-retry>Спробувати знову ↻</button></div></section><section><p class="state-label">05 / ФОРМИ НЕ ІСНУЄ</p><div class="state-panel"><span class="state-icon" aria-hidden="true">?</span><h2>Цей аркуш загубився.</h2><p>Форму за цим посиланням не знайдено. Перевірте адресу або поверніться до списку.</p><a class="btn small" href="#home">До всіх форм</a></div></section><section><p class="state-label">06 / ВІДПОВІДЬ НАДІСЛАНО</p><div class="state-panel"><span class="success-stamp">✓ ПРИЙНЯТО</span><h2>Дякуємо за ваш час.</h2><p>Ваші відповіді збережено. Ви допомогли нам дізнатися трохи більше.</p><a class="btn small" href="#home">До всіх форм</a></div></section><section class="state-wide"><p class="state-label">07 / ПОМИЛКА ПОЛЯ ТА НАДСИЛАННЯ</p><div class="sheet"><label class="field">Як вас звати? <span class="red">*</span><input class="input" placeholder="Ваша відповідь" aria-invalid="true" aria-describedby="example-error" style="border-color:var(--red)"></label><p class="error" id="example-error">Вкажіть відповідь на це питання.</p><div style="border-top:1px dashed var(--line);margin-top:23px;padding-top:18px"><p class="error">Не вдалося надіслати відповіді. Введені дані залишаються у формі. Спробуйте ще раз.</p><button class="btn small" type="button" data-retry style="margin-top:16px">Повторити надсилання ↻</button></div></div></section></div>`;
+      }
+      function render() {
+        const screen = location.hash.slice(1) || 'home';
+        const views = { home, builder, fill, responses: responsePage, states };
+        const current = views[screen] ? screen : 'home';
+        queryElement('#main').innerHTML = views[current]();
+        queryElements('[data-screen]').forEach((link) => {
+          if (link.dataset.screen === current) {
+            link.setAttribute('aria-current', 'page');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+        document.title = `форма. — ${queryElement(`[data-screen="${current}"]`).textContent.slice(3)} · макет`;
+        if (current === 'fill' && !isSubmitted) {
+          restoreAnswers();
+        }
+        window.scrollTo(0, 0);
+        queryElement('#main').focus({ preventScroll: true });
+      }
+      function syncDraft() {
+        if (!queryElement('#builder-form')) {
+          return;
+        }
+        draft.title = queryElement('#draft-title').value;
+        draft.description = queryElement('#draft-description').value;
+        queryElements('[data-question]').forEach((element) => {
+          const question = draft.questions.find(
+            (question) => question.id === Number(element.dataset.question),
+          );
+          question.title = queryElement('[data-title]', element).value;
+          question.required = queryElement('[data-required]', element).checked;
+          question.options = queryElements('[data-option]', element).map((input) => input.value);
+        });
+      }
+      function refreshEditors(focusId) {
+        queryElement('#editors').innerHTML = draft.questions.map(editor).join('');
+        if (focusId) {
+          queryElement(`[data-question="${focusId}"] [data-title]`)?.focus();
+        }
+      }
+      function captureAnswers() {
+        const form = queryElement('#fill-form');
+        if (!form) {
+          return;
+        }
+        const data = new FormData(form);
+        savedAnswers[selectedFormId] = Object.fromEntries(
+          getSelectedForm().questions.map((question) => [
+            question.id,
+            data.getAll('q-' + question.id),
+          ]),
+        );
+        updateProgress();
+      }
+      function restoreAnswers() {
+        const values = savedAnswers[selectedFormId] || {};
+        queryElements('#fill-form input').forEach((input) => {
+          const answer = values[input.name.slice(2)] || [];
+          if (input.type === 'radio' || input.type === 'checkbox') {
+            input.checked = answer.includes(input.value);
+          } else {
+            input.value = answer[0] || '';
+          }
+        });
+        updateProgress();
+      }
+      function updateProgress() {
+        const form = getSelectedForm();
+        const count = form.questions.filter((question) =>
+          (savedAnswers[selectedFormId]?.[question.id] || []).some((answerValue) =>
+            answerValue.trim(),
+          ),
+        ).length;
+        queryElement('#progress-text').textContent =
+          `Заповнено: ${count} із ${form.questions.length}`;
+        queryElement('#progress-bar').style.width =
+          (form.questions.length ? (count / form.questions.length) * 100 : 0) + '%';
+      }
+      document.addEventListener('click', (event) => {
+        const link = event.target.closest('a');
+        if (link?.hasAttribute('data-new')) {
+          draft = { title: '', description: '', questions: [createQuestion('')] };
+          if (location.hash === '#builder') {
+            render();
+          }
+        }
+        if (link?.dataset.form) {
+          selectedFormId = link.dataset.form;
+          isSubmitted = false;
+        }
+        if (link?.getAttribute('href') === '#fill') {
+          isSubmitted = false;
+        }
+        if (link?.getAttribute('href') === location.hash && !link.hasAttribute('data-new')) {
+          event.preventDefault();
+          render();
+        }
+        const button = event.target.closest('button');
+        if (!button) {
+          return;
+        }
+        if (button.hasAttribute('data-retry')) {
+          toast(
+            'У макеті це приклад стану помилки. Повторний запит з’явиться після підключення до застосунку.',
+          );
+          return;
+        }
+        if (button.dataset.add) {
+          syncDraft();
+          const question = createQuestion(
+            '',
+            button.dataset.add,
+            false,
+            button.dataset.add === 'radio' || button.dataset.add === 'checkbox' ? [''] : [],
+          );
+          draft.questions.push(question);
+          refreshEditors(question.id);
+          return;
+        }
+        const element = button.closest('[data-question]');
+        if (!element) {
+          return;
+        }
+        syncDraft();
+        const id = Number(element.dataset.question),
+          question = draft.questions.find((question) => question.id === id);
+        if (button.hasAttribute('data-delete')) {
+          draft.questions = draft.questions.filter((question) => question.id !== id);
+        }
+        if (button.hasAttribute('data-add-option')) {
+          question.options.push('');
+        }
+        if (button.hasAttribute('data-remove-option')) {
+          question.options.splice(Number(button.dataset.removeOption), 1);
+        }
+        refreshEditors();
+        if (button.hasAttribute('data-add-option')) {
+          const options = queryElements(`[data-question="${id}"] [data-option]`);
+          options.at(-1)?.focus();
+        }
+      });
+      document.addEventListener('input', (event) => {
+        if (event.target.id === 'search') {
+          const query = event.target.value.trim().toLocaleLowerCase('uk');
+          queryElement('#cards').innerHTML = cards(
+            forms.filter((form) =>
+              (form.title + ' ' + form.description).toLocaleLowerCase('uk').includes(query),
+            ),
+          );
+        }
+        if (event.target.closest('#builder-form')) {
+          syncDraft();
+        }
+        if (event.target.closest('#fill-form')) {
+          captureAnswers();
+          const field = event.target.closest('[data-answer-question]');
+          queryElement('.error', field).textContent = '';
+          queryElements('input', field).forEach((input) => input.removeAttribute('aria-invalid'));
+        }
+      });
+      document.addEventListener('change', (event) => {
+        if (!event.target.hasAttribute('data-type')) {
+          return;
+        }
+        syncDraft();
+        const id = Number(event.target.closest('[data-question]').dataset.question);
+        const question = draft.questions.find((question) => question.id === id);
+        question.type = event.target.value;
+        if (
+          (question.type === 'radio' || question.type === 'checkbox') &&
+          !question.options.length
+        ) {
+          question.options = [''];
+        }
+        refreshEditors();
+        queryElement(`[data-question="${id}"] [data-type]`).focus();
+      });
+      document.addEventListener('submit', (event) => {
+        event.preventDefault();
+        if (event.target.id === 'builder-form') {
+          syncDraft();
+          const invalid = draft.questions.find(
+            (question) =>
+              !question.title.trim() ||
+              ((question.type === 'radio' || question.type === 'checkbox') &&
+                !question.options.some((optionValue) => optionValue.trim())),
+          );
+          if (!draft.title.trim() || !draft.questions.length || invalid) {
+            queryElement('#builder-error').textContent =
+              'Додайте назву форми, принаймні одне питання й варіанти для питань із вибором.';
+            return;
+          }
+          const form = structuredClone(draft);
+          form.id = 'demo-' + ++nextId;
+          form.date = '02.10.2026';
+          forms.unshift(form);
+          responses[form.id] = [];
+          selectedFormId = form.id;
+          isSubmitted = false;
+          navigate('home');
+          toast('Форму додано до макета. Демо-дані зникнуть після оновлення сторінки.');
+        }
+        if (event.target.id === 'fill-form') {
+          captureAnswers();
+          let firstInvalid;
+          getSelectedForm().questions.forEach((question) => {
+            const controls = queryElements(`[name="q-${question.id}"]`);
+            const missing =
+              question.required &&
+              !(savedAnswers[selectedFormId]?.[question.id] || []).some((answerValue) =>
+                answerValue.trim(),
+              );
+            queryElement('#error-' + question.id).textContent = missing
+              ? 'Вкажіть відповідь на це питання.'
+              : '';
+            controls.forEach((input) => {
+              input.setAttribute('aria-describedby', 'error-' + question.id);
+              if (missing) {
+                input.setAttribute('aria-invalid', 'true');
+              } else {
+                input.removeAttribute('aria-invalid');
+              }
+            });
+            if (missing && !firstInvalid) {
+              firstInvalid = controls[0];
+            }
+          });
+          if (firstInvalid) {
+            firstInvalid.focus();
+            return;
+          }
+          const date = new Intl.DateTimeFormat('uk-UA', {
+            timeZone: 'Europe/Kyiv',
+            dateStyle: 'short',
+            timeStyle: 'short',
+          }).format(new Date());
+          responses[selectedFormId].unshift({
+            date,
+            values: getSelectedForm().questions.map(
+              (question) => savedAnswers[selectedFormId]?.[question.id] || [],
+            ),
+          });
+          delete savedAnswers[selectedFormId];
+          isSubmitted = true;
+          render();
+        }
+      });
+      window.addEventListener('hashchange', render);
+      render();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+.paper {
+  border: var(--border-strong);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-paper);
+  padding: 27px;
+  min-width: 0;
+}
+
+.yellow {
+  border-top: 7px solid var(--color-yellow);
+}
+
+.red {
+  border-top: 8px solid var(--color-primary);
+}
+
+@media (max-width: 680px) {
+  .paper {
+    padding: 22px;
+  }
+}
