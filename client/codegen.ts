@@ -1,13 +1,15 @@
-import type { CodegenConfig } from "@graphql-codegen/cli";
+import type { CodegenConfig } from '@graphql-codegen/cli';
+import { typeDefs } from '../server/src/shema/typeDefs';
 
 const config: CodegenConfig = {
-    schema: "http://localhost:4000/graphql",
-    documents: ["src/**/*.graphql"],
-    generates: {
-        "src/api/generated/types.ts": {
-            plugins: ["typescript", "typescript-operations"],
-        },
+  schema: typeDefs,
+  documents: ['src/entities/**/*.graphql', 'src/features/**/*.graphql'],
+  generates: {
+    'src/shared/api/generated/graphql.ts': {
+      plugins: ['typescript', 'typescript-operations', 'typed-document-node'],
+      config: { enumsAsTypes: true, useTypeImports: true },
     },
+  },
 };
 
 export default config;

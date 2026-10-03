@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CookersOldExpress — дизайн-макет</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFF3D0;
+    --paper-soft:#FFFDF5;
+    --ink:#221912;
+    --cherry:#E63946;
+    --cherry-dark:#C22733;
+    --teal:#12877F;
+    --mustard:#F5B700;
+    --grape:#4A2170;
+    --grape-light:#6B3FA0;
+    --shadow-off: 6px 6px 0 var(--ink);
+    --shadow-off-sm: 4px 4px 0 var(--ink);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Space Grotesk',sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3{font-family:'Archivo Black',sans-serif;line-height:1.15;margin:0;}
+  p{margin:0;}
+  button{font-family:inherit;cursor:pointer;}
+  input,select{font-family:inherit;}
+  a{color:inherit;}
+  ::selection{background:var(--mustard);color:var(--ink);}
+  :focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
+
+  /* ---------- intro overlay ---------- */
+  .intro-overlay{
+    position:fixed;inset:0;background:var(--ink);color:var(--paper);
+    z-index:999;display:flex;align-items:center;justify-content:center;
+    flex-direction:column;text-align:center;transition:opacity .5s ease;cursor:pointer;
+  }
+  .intro-overlay.hide{opacity:0;pointer-events:none;}
+  .intro-line{font-family:'VT323',monospace;font-size:1.6rem;letter-spacing:.5px;}
+  .intro-progress{width:260px;height:18px;border:3px solid var(--paper);margin:18px auto;}
+  .intro-bar{height:100%;width:0;background:var(--mustard);transition:width 1.3s linear;}
+  .intro-hint{font-family:'VT323',monospace;font-size:1rem;opacity:.7;}
+  @media (prefers-reduced-motion: reduce){ .intro-overlay{display:none;} }
+
+  /* ---------- ticker ---------- */
+  .ticker-bar{
+    background:var(--ink);color:var(--mustard);overflow:hidden;white-space:nowrap;
+    font-family:'VT323',monospace;font-size:1.15rem;padding:5px 0;
+    position:sticky;top:0;z-index:60;border-bottom:3px solid var(--ink);
+  }
+  .ticker-track{display:inline-flex;animation:ticker 24s linear infinite;}
+  .ticker-track span{padding:0 2rem;}
+  @keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  @media (prefers-reduced-motion: reduce){ .ticker-track{animation:none;} }
+
+  /* ---------- header ---------- */
+  header.site-header{
+    position:sticky;top:32px;z-index:55;background:var(--paper);
+    border-bottom:3px solid var(--ink);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 28px;flex-wrap:wrap;gap:12px;
+  }
+  .logo{font-size:1.5rem;letter-spacing:.5px;}
+  .logo span{color:var(--cherry);}
+  nav.main-nav{display:flex;gap:1.6rem;flex-wrap:wrap;}
+  nav.main-nav a{
+    font-weight:600;text-decoration:none;position:relative;padding-bottom:3px;
+  }
+  nav.main-nav a::after{
+    content:'';position:absolute;left:0;bottom:0;width:0;height:3px;background:var(--cherry);
+    transition:width .2s ease;
+  }
+  nav.main-nav a:hover::after{width:100%;}
+  .header-actions{display:flex;align-items:center;gap:14px;}
+  .icon-btn{
+    background:var(--paper-soft);border:3px solid var(--ink);box-shadow:var(--shadow-off-sm);
+    padding:8px 12px;display:flex;align-items:center;gap:8px;font-weight:600;
+    transition:transform .1s ease, box-shadow .1s ease;
+  }
+  .icon-btn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink);}
+  .cart-badge{
+    background:var(--mustard);border:2px solid var(--ink);border-radius:50%;
+    min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;
+    font-size:.8rem;font-weight:700;
+  }
+  .cart-badge.bump{animation:bump .3s ease;}
+  @keyframes bump{0%{transform:scale(1);}40%{transform:scale(1.35);}100%{transform:scale(1);}}
+  .btn-outline{
+    background:transparent;border:3px solid var(--ink);padding:8px 16px;font-weight:600;
+  }
+  .btn-outline:hover{background:var(--ink);color:var(--paper);}
+
+  /* ---------- buttons general ---------- */
+  .btn-primary{
+    background:var(--cherry);color:var(--paper-soft);border:3px solid var(--ink);
+    padding:12px 22px;font-weight:700;box-shadow:var(--shadow-off);
+    transition:transform .1s ease, box-shadow .1s ease;
+  }
+  .btn-primary:active{transform:translate(6px,6px);box-shadow:0 0 0 var(--ink);}
+  .btn-secondary{
+    background:var(--paper-soft);border:3px solid var(--ink);padding:10px 18px;font-weight:700;
+    box-shadow:var(--shadow-off-sm);transition:transform .1s ease, box-shadow .1s ease;
+  }
+  .btn-secondary:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--ink);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    max-width:1180px;margin:0 auto;padding:64px 28px;
+    display:grid;grid-template-columns:1.1fr .8fr;gap:48px;align-items:center;
+  }
+  .hero h1{font-size:2.6rem;max-width:14ch;}
+  .hero p.lede{margin-top:18px;max-width:46ch;font-size:1.05rem;}
+  .hero-ctas{margin-top:28px;display:flex;gap:14px;flex-wrap:wrap;}
+  .receipt{
+    background:var(--paper-soft);border:3px solid var(--ink);box-shadow:var(--shadow-off);
+    font-family:'VT323',monospace;font-size:1.15rem;padding:22px 20px;
+    transform:rotate(-3deg);max-width:300px;margin:0 auto;
+    clip-path:polygon(0 0,100% 0,100% 96%,92% 100%,84% 96%,76% 100%,68% 96%,60% 100%,52% 96%,44% 100%,36% 96%,28% 100%,20% 96%,12% 100%,4% 96%,0 100%);
+  }
+  .receipt hr{border:none;border-top:2px dashed var(--ink);margin:8px 0;}
+  .receipt .row{display:flex;justify-content:space-between;gap:8px;}
+  .receipt .total{font-weight:700;font-size:1.3rem;}
+
+  /* ---------- sections ---------- */
+  section{max-width:1180px;margin:0 auto;padding:20px 28px 72px;}
+  .section-title{font-size:1.8rem;margin-bottom:8px;}
+  .section-sub{max-width:52ch;opacity:.8;margin-bottom:32px;}
+
+  /* ---------- tabs ---------- */
+  .tabs{display:flex;gap:6px;margin-bottom:28px;flex-wrap:wrap;}
+  .tab{
+    background:var(--paper-soft);border:3px solid var(--ink);border-bottom:none;
+    padding:10px 20px;font-weight:600;transform:translateY(4px);
+    transition:transform .15s ease;
+  }
+  .tab.active{transform:translateY(0);background:var(--mustard);}
+  .menu-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:26px;
+    border-top:3px solid var(--ink);padding-top:28px;
+  }
+
+  /* ---------- ticket card (shared motif) ---------- */
+  .ticket{
+    position:relative;background:var(--paper-soft);border:3px solid var(--ink);
+    box-shadow:var(--shadow-off-sm);
+  }
+  .ticket::before,.ticket::after{
+    content:'';position:absolute;top:-9px;width:16px;height:16px;border-radius:50%;
+    background:var(--paper);border:3px solid var(--ink);
+  }
+  .ticket::before{left:16px;}
+  .ticket::after{right:16px;}
+
+  .dish{padding:22px 18px 18px;display:flex;flex-direction:column;gap:10px;}
+  .dish-icon-wrap{
+    width:56px;height:56px;display:flex;align-items:center;justify-content:center;
+    border:3px solid var(--ink);color:var(--paper-soft);
+  }
+  .dish[data-cat="main"] .dish-icon-wrap{background:var(--cherry);}
+  .dish[data-cat="drinks"] .dish-icon-wrap{background:var(--teal);}
+  .dish[data-cat="dessert"] .dish-icon-wrap{background:var(--mustard);color:var(--ink);}
+  .dish h3{font-size:1.15rem;}
+  .dish .desc{font-size:.92rem;opacity:.8;min-height:2.6em;}
+  .dish-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;}
+  .price-stamp{
+    background:var(--mustard);border:2px solid var(--ink);border-radius:50%;
+    width:58px;height:58px;display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:.85rem;transform:rotate(-6deg);flex-shrink:0;
+  }
+  .add-btn{
+    background:var(--paper-soft);border:2px solid var(--ink);padding:8px 14px;font-weight:600;font-size:.85rem;
+    transition:background .15s ease, color .15s ease, transform .12s ease;
+  }
+  .add-btn:hover{background:var(--cherry);color:var(--paper-soft);}
+  .add-btn.stamped{transform:scale(.9);background:var(--cherry);color:var(--paper-soft);}
+
+  /* ---------- reviews ---------- */
+  .review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:26px;}
+  .review{padding:22px 20px 20px;display:flex;flex-direction:column;gap:10px;}
+  .review-head{display:flex;align-items:center;gap:12px;}
+  .avatar{
+    width:42px;height:42px;border-radius:50%;border:2px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--paper-soft);
+    flex-shrink:0;
+  }
+  .stars{color:var(--mustard);letter-spacing:2px;}
+  .review-quote{font-size:.95rem;}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--ink);color:var(--paper);padding:44px 28px 30px;}
+  .footer-inner{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+  .counter-box{font-family:'VT323',monospace;font-size:1.4rem;}
+  .counter-digits{
+    background:#000;color:var(--mustard);padding:6px 12px;border:2px solid var(--mustard);
+    display:inline-block;letter-spacing:4px;margin-left:8px;
+  }
+  .fineprint{opacity:.6;font-size:.85rem;margin-top:10px;max-width:44ch;}
+
+  /* ---------- cart drawer ---------- */
+  .drawer-overlay{
+    position:fixed;inset:0;background:rgba(34,25,18,.5);opacity:0;pointer-events:none;
+    transition:opacity .25s ease;z-index:70;
+  }
+  .drawer-overlay.open{opacity:1;pointer-events:auto;}
+  .cart-drawer{
+    position:fixed;top:0;right:0;height:100%;width:min(400px,92vw);
+    background:var(--paper-soft);border-left:3px solid var(--ink);
+    transform:translateX(100%);transition:transform .3s ease;z-index:80;
+    display:flex;flex-direction:column;
+  }
+  .cart-drawer.open{transform:translateX(0);}
+  .drawer-head{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:18px 20px;border-bottom:3px solid var(--ink);
+  }
+  .close-x{background:none;border:none;font-size:1.6rem;line-height:1;color:var(--ink);}
+  .drawer-body{padding:20px;overflow-y:auto;flex:1;font-family:'VT323',monospace;font-size:1.05rem;}
+  .cart-empty{opacity:.7;font-family:'Space Grotesk',sans-serif;}
+  .cart-row{
+    display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:10px;
+    padding:10px 0;border-bottom:2px dashed var(--ink);
+  }
+  .cart-row-controls{display:flex;align-items:center;gap:6px;}
+  .qty-btn{
+    width:24px;height:24px;border:2px solid var(--ink);background:var(--paper);font-weight:700;
+    display:flex;align-items:center;justify-content:center;font-size:1rem;line-height:1;
+  }
+  .remove-btn{background:none;border:none;color:var(--cherry);font-size:1.2rem;font-weight:700;}
+  .drawer-foot{border-top:3px solid var(--ink);padding:18px 20px;}
+  .drawer-total{display:flex;justify-content:space-between;font-family:'VT323',monospace;font-size:1.3rem;margin-bottom:14px;}
+  .drawer-foot .btn-primary{width:100%;}
+
+  .checkout-view label{display:block;font-weight:600;font-size:.9rem;margin-bottom:16px;}
+  .checkout-view input{
+    width:100%;margin-top:6px;padding:10px 12px;border:2px solid var(--ink);
+    background:var(--paper);font-size:.95rem;
+  }
+  .field-error{color:var(--cherry-dark);font-size:.8rem;display:block;margin-top:4px;min-height:1em;font-weight:600;}
+  .back-link{background:none;border:none;color:var(--ink);text-decoration:underline;font-size:.85rem;margin-bottom:14px;padding:0;}
+  .success-view{text-align:center;padding:20px 6px;}
+  .stamp{
+    display:inline-block;border:4px solid var(--cherry);color:var(--cherry);
+    font-family:'Archivo Black',sans-serif;padding:14px 18px;transform:rotate(-6deg);
+    margin-bottom:16px;font-size:1.1rem;
+  }
+
+ 
+  /* ---------- admin view ---------- */
+  #adminView{background:var(--grape);min-height:100vh;color:var(--paper);}
+  .admin-topbar{
+    display:flex;justify-content:space-between;align-items:center;padding:18px 28px;
+    border-bottom:3px solid var(--paper);font-family:'VT323',monospace;font-size:1.2rem;
+  }
+  .admin-topbar .btn-outline{border-color:var(--paper);color:var(--paper);}
+  .admin-topbar .btn-outline:hover{background:var(--paper);color:var(--grape);}
+  .kanban{
+    max-width:1280px;margin:0 auto;padding:30px 28px 60px;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:20px;overflow-x:auto;
+  }
+  .kanban-col{background:var(--grape-light);border:3px solid var(--paper);min-width:240px;}
+  .kanban-col-head{
+    display:flex;justify-content:space-between;padding:12px 14px;border-bottom:3px solid var(--paper);
+    font-weight:700;
+  }
+  .kanban-count{
+    background:var(--paper);color:var(--grape);border-radius:50%;
+    width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:.8rem;
+  }
+  .kanban-list{padding:14px;display:flex;flex-direction:column;gap:14px;min-height:120px;}
+  .ticket-order{
+    background:var(--paper-soft);color:var(--ink);padding:14px;
+    border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);
+  }
+  .ticket-order .ord-num{font-family:'VT323',monospace;font-size:1.1rem;opacity:.7;}
+  .ticket-order .ord-items{font-size:.85rem;margin:8px 0;opacity:.85;}
+  .ticket-order .ord-total{font-weight:700;margin-bottom:10px;}
+  .ticket-order select{width:100%;padding:6px;border:2px solid var(--ink);background:var(--paper);}
+
+  /* ---------- preview toggle (meta control) ---------- */
+  .preview-toggle{
+    position:fixed;bottom:18px;right:18px;z-index:65;
+    background:#fff;border:2px dashed var(--ink);padding:10px 14px;
+    font-size:.8rem;font-weight:600;box-shadow:3px 3px 0 rgba(0,0,0,.3);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:860px){
+    .hero{grid-template-columns:1fr;text-align:left;padding:44px 20px;}
+    .receipt{margin:0;}
+    nav.main-nav{order:3;width:100%;justify-content:flex-start;}
+    .kanban{grid-template-columns:1fr;}
+  }
+  @media (max-width:480px){
+    .hero h1{font-size:2rem;}
+    section{padding:16px 18px 56px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- icon sprite -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="icon-bowl" viewBox="0 0 64 64">
+    <path d="M8 28h48c0 14-10 24-24 24S8 42 8 28Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M20 28c0-8 6-14 12-14s12 6 12 14" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+    <line x1="4" y1="28" x2="60" y2="28" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-glass" viewBox="0 0 64 64">
+    <path d="M16 10h32l-6 44a4 4 0 0 1-4 4H26a4 4 0 0 1-4-4L16 10Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+    <line x1="18" y1="22" x2="46" y2="22" stroke="currentColor" stroke-width="4"/>
+  </symbol>
+  <symbol id="icon-cake" viewBox="0 0 64 64">
+    <path d="M10 54 32 10l22 44Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+    <line x1="18" y1="38" x2="46" y2="38" stroke="currentColor" stroke-width="4"/>
+  </symbol>
+</svg>
+
+<!-- intro dial-up overlay: the one orchestrated motion moment -->
+<div id="introOverlay" class="intro-overlay">
+  <div>
+    <p class="intro-line">З'єднання з кухнею...</p>
+    <div class="intro-progress"><div id="introBar" class="intro-bar"></div></div>
+    <p class="intro-hint">(клікніть, щоб пропустити)</p>
+  </div>
+</div>
+
+<!-- ticker -->
+<div class="ticker-bar">
+  <div class="ticker-track">
+    <span>🍲 CookersOldExpress — домашня кухня на швидкості кур'єра</span>
+    <span>Безкоштовна доставка від 300₴</span>
+    <span>Готуємо, поки завантажується сторінка</span>
+    <span>🍲 CookersOldExpress — домашня кухня на швидкості кур'єра</span>
+    <span>Безкоштовна доставка від 300₴</span>
+    <span>Готуємо, поки завантажується сторінка</span>
+  </div>
+</div>
+
+<!-- ================= STOREFRONT ================= -->
+<div id="storefront">
+
+  <header class="site-header">
+    <div class="logo">Cookers<span>OldExpress</span></div>
+    <nav class="main-nav">
+      <a href="#menu-main">Основні страви</a>
+      <a href="#menu-drinks">Напої</a>
+      <a href="#menu-dessert">Десерти</a>
+      <a href="#reviews">Відгуки</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="cartToggle" aria-label="Відкрити кошик">
+        🧺 Кошик <span class="cart-badge" id="cartCount">0</span>
+      </button>
+      <button class="btn-outline" id="loginBtn">Вхід</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Смачно, як у бабусі. Швидко, як у 2026-му.</h1>
+      <p class="lede">CookersOldExpress — домашня кухня на швидкості кур'єра. Обираєш страву, кидаєш у кошик, чекаєш стукіт у двері.</p>
+      <div class="hero-ctas">
+        <a href="#menu-main" class="btn-primary" style="text-decoration:none;display:inline-block;">Обрати страву</a>
+        <a href="#reviews" class="btn-secondary" style="text-decoration:none;display:inline-block;">Читати відгуки</a>
+      </div>
+    </div>
+    <div class="receipt">
+      <p>ЧЕК №0001</p>
+      <hr>
+      <div class="row"><span>Борщ по-домашньому</span><span>129₴</span></div>
+      <div class="row"><span>Вареники (12 шт)</span><span>119₴</span></div>
+      <div class="row"><span>Узвар</span><span>45₴</span></div>
+      <hr>
+      <div class="row total"><span>РАЗОМ</span><span>293₴</span></div>
+      <p style="margin-top:10px;">Час до дверей: ~35 хв</p>
+    </div>
+  </section>
+
+  <section id="menu-main">
+    <h2 class="section-title">Меню</h2>
+    <p class="section-sub">Три категорії, нуль зайвого. Обирай і додавай у кошик — він запам'ятає вибір, навіть якщо оновиш сторінку.</p>
+    <div class="tabs">
+      <button class="tab active" data-cat="all">Все меню</button>
+      <button class="tab" data-cat="main">Основні страви</button>
+      <button class="tab" data-cat="drinks">Напої</button>
+      <button class="tab" data-cat="dessert">Десерти</button>
+    </div>
+    <div class="menu-grid">
+
+      <article class="dish ticket" data-cat="main" data-id="borsch" data-name="Борщ по-домашньому" data-price="129">
+        <div class="dish-icon-wrap"><svg width="30" height="30"><use href="#icon-bowl"/></svg></div>
+        <h3>Борщ по-домашньому</h3>
+        <p class="desc">З часником і пампушками, як у неділю в дитинстві.</p>
+        <div class="dish-footer"><div class="price-stamp">129₴</div><button class="add-btn">Додати в кошик</button></div>
+      </article>
+
+      <article class="dish ticket" data-cat="main" data-id="deruny" data-name="Деруни зі сметаною" data-price="99">
+        <div class="dish-icon-wrap"><svg width="30" height="30"><use href="#icon-bowl"/></svg></div>
+        <h3>Деруни зі сметаною</h3>
+        <p class="desc">Хрумкі зовні, м'які всередині. Без компромісів.</p>
+        <div class="dish-footer"><div class="price-stamp">99₴</div><button class="add-btn">Додати в кошик</button></div>
+      </article>
+
+      <article class="dish ticket" data-cat="main" data-id="varenyky" data-name="Вареники з картоплею і шкварками" data-price="119">
+        <div class="dish-icon-wrap"><svg width="30" height="30"><use href="#icon-bowl"/></svg></div>
+        <h3>Вареники з шкварками</h3>
+        <p class="desc">12 штук у порції. Другу порцію теж можна.</p>
+        <div class="dish-footer"><div class="price-stamp">119₴</div><button class="add-btn">Додати в кошик</button></div>
+      </article>
+
+      <article class="dish ticket" data-cat="main" data-id="kotleta" data-name="Котлета по-київськи з пюре" data-price="159">
+        <div class="dish-icon-wrap"><svg width="30" height="30"><use href="#icon-bowl"/></svg></div>
+        <h3>Котлета по-київськи</h3>
+        <p class="desc">З картопляним пюре. Класика без зайвих слів.</p>
+        <div class="dish-footer"><div class="price-stamp">159₴</div><button class="add-btn">Додати в кошик</button></div>
+      </article>
+
+      <article class="dish ticket" data-cat="drinks" data-id="uzvar" data-name="Узвар" data-price="45" id="menu-drinks-anchor">
+        <div class="dish-icon-wrap"><svg width="30" height="30"><use href="#icon-glass"/></svg></div>
+        <h3>Узвар з сухофруктів</h3>
+        <p class="desc">Без цукру, як заведено ще з бабусиної кухні.</p>
+        <div class="dish-footer"><div class="price-stamp">45₴</div><button class="add-btn">Додати в кошик</button></div>
+      </article>
+
+      <article class="dish ticket" data-cat="drinks" data-id="compote" data-name="Компот вишневий" data-price="39">
+        <div class="dish-icon-wrap"><svg width="30" height="30"><use href="#icon-glass"/></svg></div>
+        <h3>Компот вишневий</h3>
+        <p class="desc">Літо в склянці, навіть посеред грудня.</p>
+        <div class="dish-footer"><div class="price-stamp">39₴</div><button class="add-btn">Додати в кошик</button></div>
+      </article>
+
+      <article class="dish ticket" data-cat="drinks" data-id="mors" data-name="Морс журавлинний" data-price="42">
+        <div class="dish-icon-wrap"><svg width="30" height="30"><use href="#icon-glass"/></svg></div>
+        <h3>Морс журавлинний</h3>
+        <p class="desc">Кислий, бадьорить краще за будильник.</p>
+        <div class="dish-footer"><div class="price-stamp">42₴</div><button class="add-btn">Додати в кошик</button></div>
+      </article>
+
+      <article class="dish ticket" data-cat="dessert" data-id="medovyk" data-name="Медовик" data-price="89" id="menu-dessert-anchor">
+        <div class="dish-icon-wrap"><svg width="30" height="30"><use href="#icon-cake"/></svg></div>
+        <h3>Медовик</h3>
+        <p class="desc">Сім коржів. Рецепт перевірено роками.</p>
+        <div class="dish-footer"><div class="price-stamp">89₴</div><button class="add-btn">Додати в кошик</button></div>
+      </article>
+
+      <article class="dish ticket" data-cat="dessert" data-id="syrnyky" data-name="Сирники з джемом" data-price="79">
+        <div class="dish-icon-wrap"><svg width="30" height="30"><use href="#icon-cake"/></svg></div>
+        <h3>Сирники з джемом</h3>
+        <p class="desc">На сніданок і не тільки на сніданок.</p>
+        <div class="dish-footer"><div class="price-stamp">79₴</div><button class="add-btn">Додати в кошик</button></div>
+      </article>
+
+      <article class="dish ticket" data-cat="dessert" data-id="napoleon" data-name="Наполеон" data-price="95">
+        <div class="dish-icon-wrap"><svg width="30" height="30"><use href="#icon-cake"/></svg></div>
+        <h3>Наполеон</h3>
+        <p class="desc">Тане швидше, ніж інтернет у 98-му.</p>
+        <div class="dish-footer"><div class="price-stamp">95₴</div><button class="add-btn">Додати в кошик</button></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="reviews">
+    <h2 class="section-title">Останні відгуки</h2>
+    <p class="section-sub">Підвантажується щоразу, коли хтось наважується залишити відгук.</p>
+    <div class="review-grid">
+      <article class="review ticket">
+        <div class="review-head">
+          <div class="avatar" style="background:var(--cherry);">О</div>
+          <div><strong>Оксана</strong><div class="stars">★★★★★</div></div>
+        </div>
+        <p class="review-quote">Замовляла борщ на роботу — колеги питали рецепт бабусі. Довелось зізнатись, що це не моя бабуся.</p>
+      </article>
+      <article class="review ticket">
+        <div class="review-head">
+          <div class="avatar" style="background:var(--teal);">Т</div>
+          <div><strong>Тарас</strong><div class="stars">★★★★★</div></div>
+        </div>
+        <p class="review-quote">Деруни доїхали гарячими, хоча я живу на 9 поверсі без ліфта. Респект кур'єру.</p>
+      </article>
+      <article class="review ticket">
+        <div class="review-head">
+          <div class="avatar" style="background:var(--mustard);color:var(--ink);">М</div>
+          <div><strong>Марина</strong><div class="stars">★★★★☆</div></div>
+        </div>
+        <p class="review-quote">Замовляю щочетверга медовик. Це вже не звичка, а ритуал.</p>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="counter-box">Замовлень оформлено сьогодні:<span class="counter-digits">00482</span></div>
+        <p class="fineprint">Найкраще виглядає на будь-якому екрані. Ймовірно, запрацювало б і на дискеті — але ми не перевіряли.</p>
+      </div>
+      <div>
+        <p style="font-weight:600;margin-bottom:8px;">CookersOldExpress</p>
+        <p class="fineprint">Навчальний проєкт курсу «Основи FE-технологій». 2026.</p>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ================= ADMIN VIEW ================= -->
+<div id="adminView" hidden>
+  <div class="admin-topbar">
+    <span>CookersOldExpress // адмін-панель — увійшов(-ла): staff</span>
+    <button class="btn-outline" id="logoutBtn">Вийти</button>
+  </div>
+  <div class="kanban">
+
+    <div class="kanban-col" data-status="new">
+      <div class="kanban-col-head"><span>Нове</span><span class="kanban-count">0</span></div>
+      <div class="kanban-list">
+        <div class="ticket-order" data-status="new">
+          <div class="ord-num">Замовлення #1042</div>
+          <strong>Оксана П.</strong>
+          <div class="ord-items">Борщ по-домашньому ×1, Медовик ×1</div>
+          <div class="ord-total">218₴</div>
+          <select class="status-select">
+            <option value="new" selected>Нове</option>
+            <option value="cooking">Готується</option>
+            <option value="delivery">В дорозі</option>
+            <option value="done">Виконано</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="kanban-col" data-status="cooking">
+      <div class="kanban-col-head"><span>Готується</span><span class="kanban-count">0</span></div>
+      <div class="kanban-list">
+        <div class="ticket-order" data-status="cooking">
+          <div class="ord-num">Замовлення #1043</div>
+          <strong>Тарас Г.</strong>
+          <div class="ord-items">Деруни ×2, Узвар ×1</div>
+          <div class="ord-total">243₴</div>
+          <select class="status-select">
+            <option value="new">Нове</option>
+            <option value="cooking" selected>Готується</option>
+            <option value="delivery">В дорозі</option>
+            <option value="done">Виконано</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="kanban-col" data-status="delivery">
+      <div class="kanban-col-head"><span>В дорозі</span><span class="kanban-count">0</span></div>
+      <div class="kanban-list">
+        <div class="ticket-order" data-status="delivery">
+          <div class="ord-num">Замовлення #1041</div>
+          <strong>Марина К.</strong>
+          <div class="ord-items">Вареники ×1, Наполеон ×1</div>
+          <div class="ord-total">214₴</div>
+          <select class="status-select">
+            <option value="new">Нове</option>
+            <option value="cooking">Готується</option>
+            <option value="delivery" selected>В дорозі</option>
+            <option value="done">Виконано</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="kanban-col" data-status="done">
+      <div class="kanban-col-head"><span>Виконано</span><span class="kanban-count">0</span></div>
+      <div class="kanban-list">
+        <div class="ticket-order" data-status="done">
+          <div class="ord-num">Замовлення #1039</div>
+          <strong>Ігор С.</strong>
+          <div class="ord-items">Котлета по-київськи ×1, Морс ×1</div>
+          <div class="ord-total">201₴</div>
+          <select class="status-select">
+            <option value="new">Нове</option>
+            <option value="cooking">Готується</option>
+            <option value="delivery">В дорозі</option>
+            <option value="done" selected>Виконано</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- preview toggle: meta control, not part of the site's own UI -->
+<button id="viewToggle" class="preview-toggle">🔧 Показати екран адмінки</button>
+
+<!-- cart drawer -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer">
+  <div id="cartView">
+    <div class="drawer-head"><h3>Кошик</h3><button class="close-x" id="closeDrawer" aria-label="Закрити кошик">×</button></div>
+    <div class="drawer-body" id="cartItems"></div>
+    <div class="drawer-foot">
+      <div class="drawer-total"><span>Разом</span><span id="cartTotal">0₴</span></div>
+      <button class="btn-primary" id="toCheckout">Оформити замовлення</button>
+    </div>
+  </div>
+
+  <div id="checkoutView" hidden>
+    <div class="drawer-head"><h3>Оформлення</h3><button class="close-x" id="closeDrawer2" aria-label="Закрити">×</button></div>
+    <div class="drawer-body checkout-view">
+      <button class="back-link" id="backToCart">← Назад до кошика</button>
+      <form id="checkoutForm">
+        <label>Ім'я
+          <input type="text" id="custName" required>
+          <span class="field-error"></span>
+        </label>
+        <label>Номер телефону
+          <input type="tel" id="custPhone" placeholder="+380..." required>
+          <span class="field-error"></span>
+        </label>
+        <label>Адреса доставки
+          <input type="text" id="custAddress" required>
+          <span class="field-error"></span>
+        </label>
+        <button class="btn-primary" type="submit" style="width:100%;">Підтвердити замовлення</button>
+      </form>
+      <div class="success-view" id="successView" hidden>
+        <div class="stamp">Прийнято!</div>
+        <p>Номер замовлення: <strong id="orderNumber"></strong></p>
+        <p class="fineprint" style="margin:14px auto;">Кур'єр уже виїхав (умовно — це макет).</p>
+        <button class="btn-secondary" id="newOrderBtn">Зробити нове замовлення</button>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- login modal -->
+<div class="login-modal" id="loginModal" hidden>
+  <div class="login-box ticket">
+    <button class="close-x" id="closeLogin" aria-label="Закрити">×</button>
+    <h3>Вхід для персоналу</h3>
+    <form id="loginForm">
+      <label>Логін<input type="text" required></label>
+      <label>Пароль<input type="password" required></label>
+      <button class="btn-primary" type="submit" style="width:100%;">Увійти</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const CART_KEY = 'cookers_cart_v1';
+  function loadCart(){ try{ return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch(e){ return []; } }
+  function saveCart(c){ localStorage.setItem(CART_KEY, JSON.stringify(c)); }
+  let cart = loadCart();
+
+  function renderCart(){
+    const list = document.getElementById('cartItems');
+    list.innerHTML = '';
+    if(cart.length === 0){
+      list.innerHTML = '<p class="cart-empty">Порожньо. Час це виправити.</p>';
+    } else {
+      cart.forEach(item=>{
+        const row = document.createElement('div');
+        row.className = 'cart-row';
+        row.innerHTML =
+          '<div class="cart-row-name">'+item.name+'</div>'+
+          '<div class="cart-row-controls">'+
+            '<button class="qty-btn" data-action="dec" data-id="'+item.id+'" aria-label="Зменшити">−</button>'+
+            '<span>'+item.qty+'</span>'+
+            '<button class="qty-btn" data-action="inc" data-id="'+item.id+'" aria-label="Збільшити">+</button>'+
+          '</div>'+
+          '<div>'+(item.price*item.qty)+'₴</div>'+
+          '<button class="remove-btn" data-action="remove" data-id="'+item.id+'" aria-label="Видалити">×</button>';
+        list.appendChild(row);
+      });
+    }
+    const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    document.getElementById('cartTotal').textContent = total + '₴';
+    document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0);
+    saveCart(cart);
+  }
+
+  function addToCart(id,name,price,btn){
+    const existing = cart.find(i=>i.id===id);
+    if(existing){ existing.qty++; } else { cart.push({id,name,price,qty:1}); }
+    renderCart();
+    const badge = document.getElementById('cartCount');
+    badge.classList.remove('bump'); void badge.offsetWidth; badge.classList.add('bump');
+    if(btn){ btn.classList.add('stamped'); setTimeout(()=>btn.classList.remove('stamped'),400); }
+  }
+
+  document.querySelectorAll('.add-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const card = btn.closest('.dish');
+      addToCart(card.dataset.id, card.dataset.name, Number(card.dataset.price), btn);
+    });
+  });
+
+  document.getElementById('cartItems').addEventListener('click', e=>{
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    const id = btn.dataset.id, action = btn.dataset.action;
+    const item = cart.find(i=>i.id===id);
+    if(!item) return;
+    if(action==='inc') item.qty++;
+    if(action==='dec'){ item.qty--; if(item.qty<=0) cart = cart.filter(i=>i.id!==id); }
+    if(action==='remove') cart = cart.filter(i=>i.id!==id);
+    renderCart();
+  });
+
+  // drawer open/close
+  const drawer = document.getElementById('cartDrawer');
+  const overlay = document.getElementById('drawerOverlay');
+  function openDrawer(){ drawer.classList.add('open'); overlay.classList.add('open'); }
+  function closeDrawer(){ drawer.classList.remove('open'); overlay.classList.remove('open'); }
+  document.getElementById('cartToggle').addEventListener('click', openDrawer);
+  document.getElementById('closeDrawer').addEventListener('click', closeDrawer);
+  document.getElementById('closeDrawer2').addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+
+  document.getElementById('toCheckout').addEventListener('click', ()=>{
+    document.getElementById('cartView').hidden = true;
+    document.getElementById('checkoutView').hidden = false;
+  });
+  document.getElementById('backToCart').addEventListener('click', ()=>{
+    document.getElementById('checkoutView').hidden = true;
+    document.getElementById('cartView').hidden = false;
+  });
+
+  document.getElementById('checkoutForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    let valid = true;
+    const name = document.getElementById('custName');
+    const phone = document.getElementById('custPhone');
+    const address = document.getElementById('custAddress');
+    [name,phone,address].forEach(f=>{ f.nextElementSibling.textContent=''; });
+    if(name.value.trim().length < 2){ name.nextElementSibling.textContent = "Вкажіть ім'я"; valid=false; }
+    if(!/^\+?\d{9,13}$/.test(phone.value.replace(/[\s\-()]/g,''))){ phone.nextElementSibling.textContent = 'Перевірте номер телефону'; valid=false; }
+    if(address.value.trim().length < 5){ address.nextElementSibling.textContent = 'Вкажіть адресу доставки'; valid=false; }
+    if(!valid) return;
+    const orderNum = 1000 + Math.floor(Math.random()*9000);
+    document.getElementById('orderNumber').textContent = '#'+orderNum;
+    document.getElementById('checkoutForm').hidden = true;
+    document.getElementById('successView').hidden = false;
+    cart = []; renderCart();
+  });
+
+  document.getElementById('newOrderBtn').addEventListener('click', ()=>{
+    document.getElementById('successView').hidden = true;
+    document.getElementById('checkoutForm').hidden = false;
+    document.getElementById('checkoutForm').reset();
+    document.getElementById('checkoutView').hidden = true;
+    document.getElementById('cartView').hidden = false;
+    closeDrawer();
+  });
+
+  // category tabs
+  document.querySelectorAll('.tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      const cat = tab.dataset.cat;
+      document.querySelectorAll('.dish').forEach(d=>{
+        d.style.display = (cat==='all' || d.dataset.cat===cat) ? '' : 'none';
+      });
+    });
+  });
+
+  // storefront / admin switch
+  function switchView(toAdmin){
+    document.getElementById('storefront').hidden = toAdmin;
+    document.getElementById('adminView').hidden = !toAdmin;
+    document.getElementById('viewToggle').textContent = toAdmin ? '🔧 Повернутись у вітрину' : '🔧 Показати екран адмінки';
+    window.scrollTo({top:0,behavior:'instant'});
+  }
+  document.getElementById('viewToggle').addEventListener('click', ()=>{
+    switchView(document.getElementById('adminView').hidden);
+  });
+  document.getElementById('logoutBtn').addEventListener('click', ()=>switchView(false));
+  document.getElementById('loginBtn').addEventListener('click', ()=>{ document.getElementById('loginModal').hidden = false; });
+  document.getElementById('closeLogin').addEventListener('click', ()=>{ document.getElementById('loginModal').hidden = true; });
+  document.getElementById('loginForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    document.getElementById('loginModal').hidden = true;
+    switchView(true);
+  });
+
+  // admin kanban status change
+  function updateKanbanCounts(){
+    document.querySelectorAll('.kanban-col').forEach(col=>{
+      col.querySelector('.kanban-count').textContent = col.querySelectorAll('.ticket-order').length;
+    });
+  }
+  document.querySelectorAll('.status-select').forEach(sel=>{
+    sel.addEventListener('change', ()=>{
+      const card = sel.closest('.ticket-order');
+      const target = document.querySelector('.kanban-col[data-status="'+sel.value+'"] .kanban-list');
+      target.appendChild(card);
+      card.dataset.status = sel.value;
+      updateKanbanCounts();
+    });
+  });
+
+  // intro overlay
+  window.addEventListener('load', ()=>{
+    const introOverlay = document.getElementById('introOverlay');
+    const bar = document.getElementById('introBar');
+    requestAnimationFrame(()=>{ bar.style.width = '100%'; });
+    const dismiss = ()=>{ introOverlay.classList.add('hide'); setTimeout(()=>introOverlay.remove(), 500); };
+    setTimeout(dismiss, 1500);
+    introOverlay.addEventListener('click', dismiss);
+  });
+
+  renderCart();
+  updateKanbanCounts();
+</script>
+</body>
+</html>

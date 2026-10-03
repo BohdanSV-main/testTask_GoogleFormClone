@@ -1,0 +1,280 @@
+.hero {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  align-items: center;
+  gap: 50px;
+  padding: 59px 0 52px;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 4.3vw, 57px);
+  letter-spacing: -2.5px;
+}
+
+.hero h1 em {
+  font-family: var(--font-editorial);
+  font-weight: 400;
+  color: var(--color-primary);
+  letter-spacing: -2px;
+}
+
+.eyebrow {
+  font: 700 11px var(--font-mono);
+  letter-spacing: 1.7px;
+  margin-bottom: 20px;
+}
+
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--color-teal);
+  margin-right: 9px;
+}
+
+.lead {
+  max-width: 415px;
+  margin: 22px 0 25px;
+  color: var(--color-muted);
+  font-size: 16px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.actions > a {
+  white-space: nowrap;
+}
+
+.asideNote {
+  font: 12px var(--font-mono);
+  margin-left: 8px;
+  transform: rotate(-4deg);
+}
+
+.art {
+  height: 300px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  position: absolute;
+  inset: 18px 0 0 35px;
+  background-image: radial-gradient(#b3a58c 1px, transparent 1px);
+  background-size: 13px 13px;
+  mask-image: radial-gradient(ellipse, #000 20%, transparent 70%);
+}
+
+.slip {
+  position: relative;
+  background: var(--color-surface);
+  border: var(--border-strong);
+  box-shadow: 6px 6px 0 #d4c9b0;
+  width: 269px;
+  padding: 23px 25px 26px;
+  transform: rotate(-7deg);
+}
+
+.slip::before {
+  content: '';
+  position: absolute;
+  width: 83px;
+  height: 27px;
+  background: #edc655ba;
+  top: -14px;
+  left: 88px;
+  transform: rotate(4deg);
+}
+
+.slipTop {
+  border-bottom: var(--border-strong);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  font: 12px/1.6 var(--font-mono);
+  letter-spacing: 1px;
+}
+
+.slipTitle {
+  font-weight: 900;
+  font-size: 27px;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.slipRow {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.box {
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--color-ink);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-teal);
+}
+
+.line,
+.shortLine {
+  height: 5px;
+  background: #dfd8c7;
+  width: 135px;
+}
+
+.shortLine {
+  width: 93px;
+}
+
+.slipFoot {
+  border-top: 1px dashed var(--color-ink);
+  padding-top: 10px;
+  margin-top: 19px;
+  font: 10px var(--font-mono);
+}
+
+.stamp {
+  position: absolute;
+  right: 2px;
+  bottom: 20px;
+  border: var(--border-strong);
+  outline: 5px solid var(--color-paper);
+  border-radius: 50%;
+  height: 105px;
+  width: 105px;
+  background: var(--color-yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transform: rotate(12deg);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.stamp b {
+  font-size: 33px;
+  line-height: 1;
+}
+
+.star {
+  position: absolute;
+  right: 35px;
+  top: 6px;
+  color: var(--color-primary);
+  font: 68px var(--font-editorial);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin: 44px 0 48px;
+  padding-top: 23px;
+  border-top: 1px solid var(--color-line);
+}
+
+.steps > div {
+  display: flex;
+  align-items: baseline;
+  gap: 13px;
+  font-size: 12px;
+}
+
+.steps b {
+  font: 20px var(--font-editorial);
+  color: var(--color-primary);
+}
+
+.steps strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 3px;
+  color: var(--color-ink);
+}
+
+.steps p {
+  color: var(--color-muted);
+}
+
+@media (min-width: 1400px) {
+  .hero {
+    padding-top: 70px;
+    padding-bottom: 64px;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    gap: 20px;
+  }
+
+  .art {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-width: 680px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 36px 0 30px;
+    gap: 12px;
+  }
+
+  .hero h1 {
+    font-size: 43px;
+    letter-spacing: -2px;
+  }
+
+  .lead {
+    font-size: 15px;
+    margin-top: 16px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    margin-bottom: 16px;
+  }
+
+  .art {
+    max-width: 355px;
+    width: 100%;
+    margin: 20px auto 0;
+    transform: scale(0.94);
+  }
+
+  .actions {
+    flex-wrap: wrap;
+  }
+
+  .asideNote {
+    font-size: 10px;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 17px;
+    margin: 32px 0;
+  }
+
+  .steps strong {
+    display: inline;
+    margin-right: 5px;
+  }
+}

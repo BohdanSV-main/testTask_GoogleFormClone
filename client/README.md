@@ -1,73 +1,64 @@
-# React + TypeScript + Vite
+﻿# Frontend: архітектура й домовленості
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Шари
 
-Currently, two official plugins are available:
+`app → pages → widgets → features → entities → shared`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Модуль може використовувати нижчі шари. Різні slices одного шару не імпортують один одного. Зовнішні споживачі використовують public API slice; усередині slice — відносні імпорти.
 
-## React Compiler
+Pages містять лише композицію й статичний контент. Параметри маршрутів передаються через адаптери в `app/router`. У pages немає API-запитів, локального стану анкети, валідації чи формування payload.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Модуль                         | Відповідальність                                          |
+| ------------------------------ | --------------------------------------------------------- |
+| `features/create-form/model`   | Чернетка, reducer, валідація, підготовка запиту           |
+| `features/create-form/api`     | Мутація створення й інвалідація списку                    |
+| `features/fill-form/model`     | Відповіді, прогрес, валідація, надсилання                 |
+| `features/fill-form/api`       | Мутація відповіді й інвалідація її форми                  |
+| `entities/form`                | Типи, DTO-мапер, queries та FormCard                      |
+| `entities/response`            | Типи, query та ResponseCard                               |
+| `widgets/form-responses/model` | Поєднання питань із відповідями без cross-import entities |
+| `widgets/forms-catalog/model`  | Завантаження, сортування й пошук                          |
+| `shared/api`                   | Єдиний baseApi та GraphQL transport                       |
+| `shared/styles`                | Токени дизайну                                            |
 
-## Expanding the ESLint configuration
+## Стан і помилки
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+RTK Query володіє серверним станом. Конструктор використовує локальний reducer; відповіді належать feature заповнення. Вивідні дані обчислюються зі стану. Reducer і функції валідації не виконують запитів і не залежать від React.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Запит GraphQL може завершитися помилкою при HTTP 200. Transport нормалізує це в помилку RTK Query; success показується лише після `.unwrap()`. Невдале надсилання не очищає форму. Під час надсилання елементи заблоковані; додаткова перевірка захищає від одночасних submit-викликів.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+При переході між різними formId локальний стан анкети створюється заново. Серверні питання не приводяться до типу чернетки через `as`.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Стилі й компоненти
+
+CSS Modules знаходяться поряд із UI. Глобальні стилі містять reset і типографіку; кольори, рамки, тіні та базові відступи визначені в `shared/styles/tokens.css`.
+
+`shared/ui` містить невеликі компоненти з конкретними варіантами. Button виконує дію; ButtonLink здійснює навігацію. Поля поєднують label, hint та error через id. Для питань використовуються fieldset/legend, для варіантів — нативні radio/checkbox.
+
+Доменна картка приймає дії через props. Наприклад, FormCard не визначає маршрути: це відповідальність каталогу.
+
+## Читабельність коду
+
+Назви описують призначення в контексті модуля: `formId`, `questionId`, `optionId`, `formsQuery`, `answeredQuestionCount`. Для булевих станів використовуємо зрозумілий предикат, наприклад `isSubmitting` або `hasSubmitAttempt`. Звичні короткі назви `form`, `question`, `event`, `props` залишаємо там, де їхнє значення очевидне.
+
+Обробники подій усередині компонентів називаємо `handleSubmit`, а callback-props — `onSubmit` / `onChange`. Складні props оголошуємо окремими типами біля компонента. Умови завжди мають фігурні дужки; підготовку даних, перевірки та повернення результату розділяємо порожніми рядками. Ці домовленості не змінюють межі FSD: бізнес-логіка залишається в model.
+
+Форматування успадковується з кореневої `.prettierrc.json`; окремої конфігурації клієнта немає. Prettier працює окремо від ESLint. Загальна команда `npm run format` форматує репозиторій, а `npm run format --workspace client` — лише клієнт.
+
+## Перевірки
+
+Із кореня репозиторію:
+
+```sh
+npm run lint --workspace client
+npm run lint:fsd --workspace client
+npm run format:check --workspace client
+npm run test:run --workspace client
+npm run build --workspace client
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Steiger перевіряє напрям імпортів і public API. Винятки в конфігурації вузькі та пояснені: назви інфраструктурних app-сегментів і навмисно тонкі pages. ESLint обмежує state/effect hooks та внутрішні API/model-імпорти у pages.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Тести лежать поряд із модулем. Чисті функції перевіряються напряму; компонентні сценарії працюють через справжній RTK Query із підміною fetch. Спільна тестова підтримка — `shared/lib/testing`, вона не імпортується production-кодом.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Після зміни `.graphql` виконуйте `npm run codegen` із кореня. Генерація використовує локальну backend-схему й не потребує сервера.

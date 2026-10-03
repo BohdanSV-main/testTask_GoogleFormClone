@@ -1,0 +1,12 @@
+# Dependencies and build output
+**/node_modules/
+**/dist/
+**/coverage/
+**/*.tsbuildinfo
+
+# Generated code and dependency locks
+client/src/shared/api/generated/
+**/package-lock.json
+
+# Original design reference supplied by the author
+cookers-old-express-design.html

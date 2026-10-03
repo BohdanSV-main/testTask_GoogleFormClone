@@ -1,0 +1,157 @@
+.header {
+  border-bottom: var(--border-strong);
+}
+
+.inner {
+  max-width: var(--content-width);
+  padding: 0 32px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.header .inner {
+  min-height: 97px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.mark {
+  background: var(--color-yellow);
+  width: 42px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: var(--border-strong);
+  box-shadow: 3px 3px 0 var(--color-ink);
+  transform: rotate(-5deg);
+}
+
+.mark svg {
+  width: 26px;
+  height: 26px;
+}
+
+.wordmark {
+  font-weight: 900;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.wordmark span {
+  color: var(--color-primary);
+}
+
+.tagline {
+  display: block;
+  font: 10px var(--font-mono);
+  letter-spacing: 2px;
+  margin-top: 7px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.nav > a:first-child {
+  font-weight: 700;
+  text-decoration-thickness: 2px;
+}
+
+.footer {
+  border-top: var(--border-strong);
+  padding: 22px 0;
+  margin-top: 36px;
+}
+
+.footerBrand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footerBrand > span {
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: -1px;
+}
+
+.footerBrand p,
+.footerNote {
+  font: 11px var(--font-mono);
+  color: var(--color-muted);
+}
+
+.footerTag {
+  border: 1px solid var(--color-ink);
+  padding: 4px 8px;
+  font: 10px var(--font-mono);
+}
+
+@media (max-width: 900px) {
+  .footerTag {
+    display: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .inner {
+    padding: 0 20px;
+    gap: 10px;
+  }
+
+  .header .inner {
+    min-height: 86px;
+  }
+
+  .mark {
+    width: 32px;
+    height: 37px;
+  }
+
+  .mark svg {
+    width: 22px;
+  }
+
+  .brand {
+    gap: 9px;
+  }
+
+  .wordmark {
+    font-size: 29px;
+  }
+
+  .tagline {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .nav > a:first-child {
+    display: none;
+  }
+
+  .nav > a:last-child {
+    padding: 8px 11px;
+    font-size: 12px;
+    min-height: 40px;
+  }
+
+  .footer .inner {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .footerNote {
+    font-size: 10px;
+  }
+}
